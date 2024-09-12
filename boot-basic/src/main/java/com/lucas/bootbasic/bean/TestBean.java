@@ -25,9 +25,27 @@ public class TestBean {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @Bean
-    public void testBeanMe() {
+    // name: Bean 의 이름을 지정, default: 메소드 이름(Bean Name 이 겹칠경우 Error 발생 방지)
+    // initMethod: Bean 생성시 호출할 메소드 지정
+    // destroyMethod: Bean 소멸시 호출할 메소드 지정
+    // valueL bean name 을 지정하는데 사용. value 에 지정된 이름으로 Spring Container 에 등록된다. name 옵션과 동일한 동작
+    @Bean(
+            name = "testBeanMe",
+            initMethod = "init",
+            destroyMethod = "close",
+            value = "testBeanMe"
+    )
+    public TestBean testBeanMe() {
         System.out.println("TestBean.testBeanMe");
+        return new TestBean();
+    }
+
+    private void close() {
+        System.out.println("TestBean.close");
+    }
+
+    private void init() {
+        System.out.println("TestBean.init");
     }
 
     // Spring Boot - Get all beans loaded by Spring Boot and print All Them

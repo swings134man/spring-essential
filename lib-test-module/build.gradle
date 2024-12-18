@@ -28,7 +28,7 @@ dependencies {
 
     // libs files
     implementation files('libs/sample-lib-0.0.1-SNAPSHOT.jar')
-
+//    implementation files('libs/boot-jwt-generator-0.0.1.jar')
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

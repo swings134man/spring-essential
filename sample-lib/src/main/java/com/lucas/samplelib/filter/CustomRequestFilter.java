@@ -19,5 +19,7 @@ public class CustomRequestFilter extends OncePerRequestFilter {
         log.info("***********************************");
         log.info("**************Request**************");
         log.info("***********************************");
+
+        filterChain.doFilter(request, response);
     }
 }

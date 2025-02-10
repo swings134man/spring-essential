@@ -1,7 +1,6 @@
 package com.lucas.bootbasic.rest;
 
-import com.lucas.bootbasic.dip.SampleRepository;
-import lombok.RequiredArgsConstructor;
+import com.lucas.bootbasic.modules.dip.SampleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;

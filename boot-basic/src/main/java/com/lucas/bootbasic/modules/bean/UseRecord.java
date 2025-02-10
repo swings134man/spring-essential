@@ -1,4 +1,4 @@
-package com.lucas.bootbasic.bean;
+package com.lucas.bootbasic.modules.bean;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

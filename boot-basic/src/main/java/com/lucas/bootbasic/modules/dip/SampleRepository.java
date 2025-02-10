@@ -1,4 +1,4 @@
-package com.lucas.bootbasic.dip;
+package com.lucas.bootbasic.modules.dip;
 
 /**
  * @package : com.lucas.bootbasic.dip

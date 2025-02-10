@@ -1,4 +1,4 @@
-package com.lucas.bootbasic.dip;
+package com.lucas.bootbasic.modules.dip;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

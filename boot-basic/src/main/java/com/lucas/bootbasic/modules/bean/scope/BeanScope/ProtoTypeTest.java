@@ -1,4 +1,4 @@
-package com.lucas.bootbasic.bean.scope.BeanScope;
+package com.lucas.bootbasic.modules.bean.scope.BeanScope;
 
 import jakarta.annotation.PreDestroy;
 import org.springframework.context.annotation.Scope;

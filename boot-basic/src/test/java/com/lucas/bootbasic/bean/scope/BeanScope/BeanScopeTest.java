@@ -1,5 +1,7 @@
 package com.lucas.bootbasic.bean.scope.BeanScope;
 
+import com.lucas.bootbasic.modules.bean.scope.BeanScope.ProtoTypeTest;
+import com.lucas.bootbasic.modules.bean.scope.BeanScope.SingletonTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

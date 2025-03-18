@@ -17,7 +17,7 @@ spring:
         - id: boot-basic
           uri: http://localhost:8080
           predicates:
-            - Path=/api/basic
+            - Path=/api/basic/**
             - After=2020-01-01T00:00:00+08:00[Asia/Seoul]
 #          filters:
 #            - CustomFilter # Custom Filter(order=1)

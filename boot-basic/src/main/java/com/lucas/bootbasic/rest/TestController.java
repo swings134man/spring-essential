@@ -14,4 +14,9 @@ public class TestController {
     public ResponseEntity<String> getTest() {
         return new ResponseEntity<>("boot-basic", HttpStatus.OK);
     }
+
+    @GetMapping("/error")
+    public void errorResponse() {
+        throw new RuntimeException("Error Test");
+    }
 }

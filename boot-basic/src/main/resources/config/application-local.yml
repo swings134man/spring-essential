@@ -1,3 +1,15 @@
+server:
+  shutdown: graceful
+  tomcat:
+    reregistration:
+      enabled: true # Tomcat MBeanRegistry 활성화(Tomcat JMX 모니터링)
+    accept-count: 100 # 대기 큐의 최대 크기 (1024 ~ 2048) default: 100
+    max-connections: 8192 # 최대 연결 수(default)
+    threads:
+      min-spare: 10 # 최소 대기 스레드 수 (default) 상황에 따라 50 ~ 100 사이 설정?
+      max: 200 # 최대 스레드 수 (default)
+
+
 spring:
   config:
     activate:

@@ -39,7 +39,7 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: none #fixme
+      ddl-auto: update #fixme
     defer-datasource-initialization: false #fixme
   sql:
     init:

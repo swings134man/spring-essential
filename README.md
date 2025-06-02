@@ -33,10 +33,13 @@
      - java 11
      - spring 2.1.x
      - gradle 5.6.4
----
+   - `변경`
+     - java 17
+     - spring 3.2.x
+     - gradle 8.13.1
+
 
 ### 3. Settings
 > ## Clone 이후 Intellij 프로젝트 Settings
->> 1. project structure -> modules -> 각 모듈별 jdk 설정 
->>> kotlin 모듈만 jdk 11 -> 나머지는 17
->> 2. 1 번 진행하기전 gradle syncs 진행 
+>> 1. gradle syncs 진행 
+>> 2. project structure -> modules -> 각 모듈별 jdk 설정 

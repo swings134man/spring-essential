@@ -25,5 +25,18 @@
    - v3.3.9
    - Spring cloud gateway
      <br/><br/>
+---
+#### 2-3. Kotlin Spring
+5. 'prince-maker-kotlin': java -> kotlin 변환 테스트 프로젝트
+   - java, gradle 등과 같은 버전들은 추후 계속 변경될 예정
+   - `init 시점 versions`
+     - java 11
+     - spring 2.1.x
+     - gradle 5.6.4
+---
 
-
+### 3. Settings
+> ## Clone 이후 Intellij 프로젝트 Settings
+>> 1. project structure -> modules -> 각 모듈별 jdk 설정 
+>>> kotlin 모듈만 jdk 11 -> 나머지는 17
+>> 2. 1 번 진행하기전 gradle syncs 진행 

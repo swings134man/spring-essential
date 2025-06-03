@@ -22,9 +22,6 @@ import java.util.stream.Collectors;
 
 import static com.makers.princemaker.code.StatusCode.HEALTHY;
 
-/**
- * @author Snow
- */
 @Service
 @RequiredArgsConstructor
 public class PrinceMakerService {
@@ -35,15 +32,18 @@ public class PrinceMakerService {
     public CreatePrince.Response createPrince(CreatePrince.Request request) {
         validateCreatePrinceRequest(request);
 
-        Prince prince = Prince.builder()
-                .princeLevel(request.getPrinceLevel())
-                .skillType(request.getSkillType())
-                .status(HEALTHY)
-                .experienceYears(request.getExperienceYears())
-                .princeId(request.getPrinceId())
-                .name(request.getName())
-                .age(request.getAge())
-                .build();
+        Prince prince = new Prince(
+                null,
+                request.getPrinceLevel(),
+                request.getSkillType(),
+                HEALTHY,
+                request.getExperienceYears(),
+                request.getPrinceId(),
+                request.getName(),
+                request.getAge(),
+                null,
+                null
+        );
         princeRepository.save(prince);
         return CreatePrince.Response.fromEntity(prince);
     }

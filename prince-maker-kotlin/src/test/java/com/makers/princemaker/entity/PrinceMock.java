@@ -6,9 +6,6 @@ import com.makers.princemaker.type.SkillType;
 
 import java.time.LocalDateTime;
 
-/**
- * @author Snow
- */
 public class PrinceMock {
     public static Prince createPrince(
             PrinceLevel princeLevel,
@@ -16,16 +13,16 @@ public class PrinceMock {
             Integer experienceYears,
             String princeId
     ) {
-        return Prince.builder()
-                .princeLevel(princeLevel)
-                .skillType(skillType)
-                .experienceYears(experienceYears)
-                .princeId(princeId)
-                .name("name")
-                .age(28)
-                .status(StatusCode.HEALTHY)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        return new Prince(
+                null,
+                princeLevel,
+                skillType,
+                StatusCode.HEALTHY,
+                experienceYears,
+                princeId,
+                "name",
+                28,
+                LocalDateTime.now(),
+                LocalDateTime.now());
     }
 }

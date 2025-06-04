@@ -6,6 +6,7 @@ import com.makers.princemaker.entity.Prince;
 import com.makers.princemaker.exception.PrinceMakerException;
 import com.makers.princemaker.repository.PrinceRepository;
 import com.makers.princemaker.code.PrinceMakerErrorCode;
+import com.makers.princemaker.repository.WoundedPrinceRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -31,6 +32,9 @@ import static org.mockito.Mockito.verify;
 class PrinceMakerServiceTest {
     @Mock
     private PrinceRepository princeRepository;
+
+    @Mock
+    private WoundedPrinceRepository woundedPrinceRepository; // 사용하지 않아도, 주입하지 않으면 컴파일 에러 발생
 
     @InjectMocks
     private PrinceMakerService princeMakerService;

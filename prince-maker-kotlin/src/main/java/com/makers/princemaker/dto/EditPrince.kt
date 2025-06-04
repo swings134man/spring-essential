@@ -1,24 +1,15 @@
-package com.makers.princemaker.dto;
+package com.makers.princemaker.dto
 
-import com.makers.princemaker.type.PrinceLevel;
-import com.makers.princemaker.type.SkillType;
-import lombok.*;
+import com.makers.princemaker.type.PrinceLevel
+import com.makers.princemaker.type.SkillType
 
-/**
- * @author Snow
- */
-public class EditPrince {
+class EditPrince {
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class Request {
-        private PrinceLevel princeLevel;
-        private SkillType skillType;
-        private Integer experienceYears;
-        private String name;
-        private Integer age;
-    }
+    data class Request(
+        var princeLevel: PrinceLevel? = null,
+        var skillType: SkillType? = null,
+        var experienceYears: Int? = null,
+        var name: String? = null,
+        var age: Int? = null
+    )
 }

@@ -4,10 +4,11 @@ import com.makers.princemaker.code.PrinceMakerErrorCode
 import com.makers.princemaker.code.StatusCode
 import com.makers.princemaker.constant.PrinceMakerConstant
 import com.makers.princemaker.dto.CreatePrince
-import com.makers.princemaker.dto.CreatePrince.Response.Companion.fromEntity
 import com.makers.princemaker.dto.EditPrince
 import com.makers.princemaker.dto.PrinceDetailDto
 import com.makers.princemaker.dto.PrinceDto
+import com.makers.princemaker.dto.toCreatePrinceResponse
+import com.makers.princemaker.dto.toPrinceDetailDto
 import com.makers.princemaker.entity.Prince
 import com.makers.princemaker.entity.WoundedPrince
 import com.makers.princemaker.exception.PrinceMakerException
@@ -51,7 +52,7 @@ class PrinceMakerService(
             null
         )
         princeRepository.save<Prince?>(prince)
-        return fromEntity(prince)
+        return prince.toCreatePrinceResponse()
     }
 
     private fun validateCreatePrinceRequest(request: CreatePrince.Request) {
@@ -89,7 +90,7 @@ class PrinceMakerService(
     @Transactional
     fun getPrince(princeId: String?): PrinceDetailDto? {
         return princeRepository.findByPrinceId(princeId)
-            .map<PrinceDetailDto?>(Function { prince: Prince? -> PrinceDetailDto.fromEntity(prince) })
+            .map<PrinceDetailDto?>(Function { prince: Prince? -> prince?.toPrinceDetailDto() })
             .orElseThrow<PrinceMakerException?>(
                 Supplier { PrinceMakerException(PrinceMakerErrorCode.NO_SUCH_PRINCE) }
             )
@@ -109,7 +110,7 @@ class PrinceMakerService(
         prince.name = request.name!!
         prince.age = request.age!!
 
-        return PrinceDetailDto.fromEntity(prince)
+        return prince.toPrinceDetailDto()
     }
 
     @Transactional
@@ -127,6 +128,6 @@ class PrinceMakerService(
             woundedPrince.princeId = prince.princeId
             woundedPrince.name = prince.name
         woundedPrinceRepository.save<WoundedPrince?>(woundedPrince)
-        return PrinceDetailDto.fromEntity(prince)
+        return prince.toPrinceDetailDto()
     }
 }

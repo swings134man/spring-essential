@@ -59,6 +59,17 @@
   - 해당 필드가 `not null` 인 경우 `MissingKotlinParameterException` 발생하고 처리가 까다로움
   - Long, Int 와 같은 원시타입의 경우 필드가 없는경우 '0' 기본값이 할당되는 문제 발생
 
-
+## 6. Enum Class 
+- Enum 클래스는 코틀린에서 `enum class` 로 정의
+- kotlin 에서 Enum 사용하듯 사용하면 됨.
+- `.kt` 파일안에 여러개의 enum class 를 정의하여 사용하면 편리함
+```kotlin
+enum class PrinceMakerErrorCode(val message: String) {
+    //...
+}
+enum class StatusCode (val code: String) {
+    //...
+}
+```
 
 

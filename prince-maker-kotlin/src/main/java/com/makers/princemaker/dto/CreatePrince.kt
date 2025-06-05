@@ -41,19 +41,15 @@ class CreatePrince {
         val princeId: String? = null,
         val name: String? = null,
         val age: Int? = null
-    ) {
-        companion object {
-            @JvmStatic
-            fun fromEntity(prince: Prince): Response {
-                return Response(
-                    princeLevel = prince.princeLevel,
-                    skillType = prince.skillType,
-                    experienceYears = prince.experienceYears,
-                    princeId = prince.princeId,
-                    name = prince.name,
-                    age = prince.age
-                )
-            }
-        }
-    }
+    )
 }//class
+
+// 확장함수: from entity 형태보다는 이렇게 활용하는게 더 자연스럽다
+fun Prince.toCreatePrinceResponse() = CreatePrince.Response(
+    princeLevel = this.princeLevel,
+    skillType = this.skillType,
+    experienceYears = this.experienceYears,
+    princeId = this.princeId,
+    name = this.name,
+    age = this.age
+)

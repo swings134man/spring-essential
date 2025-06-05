@@ -19,3 +19,10 @@ object DateTimeUtils {
         )
     }
 }
+
+// Extension Function
+// 위와 동일한 기능을 하는 확장 함수를 작성할 수 있다.
+fun LocalDateTime.toBirthDayString(): String = this.format(
+    DateTimeFormatter
+        .ofPattern("yyyy-MM-dd 탄생")
+)

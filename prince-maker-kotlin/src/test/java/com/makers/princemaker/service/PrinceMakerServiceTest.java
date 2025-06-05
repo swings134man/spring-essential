@@ -46,7 +46,7 @@ class PrinceMakerServiceTest {
                 createPrince(JUNIOR_PRINCE, INTELLECTUAL,
                         MAX_JUNIOR_EXPERIENCE_YEARS, "princeId");
         given(princeRepository.findByPrinceId(anyString()))
-                .willReturn(Optional.of(juniorPrince));
+                .willReturn(juniorPrince);
 
         //when
         PrinceDetailDto prince = princeMakerService.getPrince("princeId");
@@ -102,7 +102,7 @@ class PrinceMakerServiceTest {
         );
 
         given(princeRepository.findByPrinceId(anyString()))
-                .willReturn(Optional.of(juniorPrince));
+                .willReturn(juniorPrince);
 
         //when
         PrinceMakerException exception =
@@ -124,7 +124,7 @@ class PrinceMakerServiceTest {
                 );
 
         given(princeRepository.findByPrinceId(anyString()))
-                .willReturn(Optional.empty());
+                .willReturn(null);
 
         //when
         PrinceMakerException exception =

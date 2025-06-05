@@ -23,7 +23,7 @@ class PrinceMakerController(
     }
 
     @get:GetMapping("/princes")
-    val princes: MutableList<PrinceDto?>
+    val princes: List<PrinceDto?>
         get() = princeMakerService.allPrince
 
     @GetMapping("/prince/{princeId}")

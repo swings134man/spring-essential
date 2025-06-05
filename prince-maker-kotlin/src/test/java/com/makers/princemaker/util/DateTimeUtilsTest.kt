@@ -1,18 +1,22 @@
-package com.makers.princemaker.util;
+package com.makers.princemaker.util
 
-import org.junit.jupiter.api.Test;
+import com.makers.princemaker.util.DateTimeUtils.getLocalDateTimeString
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.should
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
-import java.time.LocalDateTime;
+// KoTest
+internal class DateTimeUtilsTest: StringSpec ({
 
-import static org.junit.jupiter.api.Assertions.*;
+    "getLocalDateTimeString 메서드 테스트" {
+        val result = getLocalDateTimeString(
+            LocalDateTime.of(2023, 12, 21, 10, 10)
+        )
 
-class DateTimeUtilsTest {
-    @Test
-    void getLocalDateTimeStringTest() {
-        String result = DateTimeUtils.getLocalDateTimeString(
-                LocalDateTime.of(2023, 12, 21, 10, 10)
-        );
-
-        assertEquals("2023-12-21 탄생", result);
+        result shouldBe "2023-12-21 탄생"
     }
-}
+
+})//body

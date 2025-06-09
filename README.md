@@ -38,6 +38,11 @@
      - spring 3.2.x
      - gradle 8.13.1
 
+6. 'kopring-jpa-demo' : Kotlin + Spring Boot + JPA Sample Project
+   - kotlin 1.9.15
+   - spring boot 3.2.13
+   - jpa, queryDsl
+   - MariaDB
 
 ### 3. Settings
 > ## Clone 이후 Intellij 프로젝트 Settings

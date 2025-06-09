@@ -1,0 +1,35 @@
+spring:
+  config:
+    activate:
+      on-profile: proxy
+
+  datasource:
+    url: jdbc:postgresql://192.168.45.135:5432/test_jpa
+    username: test
+    password: testuser1234
+    hikari:
+      driver-class-name: org.postgresql.Driver
+      idle-timeout: 180000 # 3*60*1000 = 3Min(유휴 상태 Connection 제거)
+      max-lifetime: 900000 # 15*60*1000 = 15Min(최대 Connection 생존 시간)
+      minimum-idle: 0 # 최소 Connection 수 - Maximum-pool-size 보다 작아야 함
+      maximum-pool-size: 10 # 최대 Connection 수
+
+  # JPA Setting
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: none #fixme
+    defer-datasource-initialization: false #fixme
+  sql:
+    init:
+      mode: never #fixme
+
+
+logging:
+  level:
+    org.hibernate:
+      SQL: DEBUG
+      type.descriptor.sql: trace

@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  application:
+    name: kopring-jpa-demo
+
+  profiles:
+    active: proxy
+
+  config:
+    import:
+      - classpath:/configs/application-proxy.yml
+#      - classpath:/configs/application-prod.yml

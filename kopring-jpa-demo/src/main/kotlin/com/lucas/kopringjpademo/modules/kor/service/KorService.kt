@@ -39,9 +39,10 @@ class KorService(
     }
 
     @Transactional(readOnly = true)
-    fun findById(id: Long): KorEntity{
-        return korRepository.findOneById(id)
-            ?: throw IllegalArgumentException("Kor with id $id not found")
+    fun findById(id: Long): KorEntity? {
+        return korRepository.findById(id).orElseThrow(
+            { IllegalArgumentException("Kor with id $id not found") }
+        )
     }
 
 }

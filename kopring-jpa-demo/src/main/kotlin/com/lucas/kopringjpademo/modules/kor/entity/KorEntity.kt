@@ -1,13 +1,17 @@
 package com.lucas.kopringjpademo.modules.kor.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.lucas.kopringjpademo.common.Auditable
+import com.lucas.kopringjpademo.modules.board.entity.BoardEntity
+import jakarta.persistence.CascadeType
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Entity
-import jakarta.persistence.EntityListeners
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
 /**
  * KorEntity.kt: kor Entity
@@ -17,7 +21,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
  * @description:
  */
 @Entity
-@EntityListeners(AuditingEntityListener::class)
 @Table(name = "kor")
 class KorEntity (
     @Id
@@ -26,5 +29,18 @@ class KorEntity (
 
     var name: String,
     var age: Int,
-    var isActive: Boolean = true
-): Auditable()
+    var isActive: Boolean = true,
+
+
+    @OneToMany(mappedBy = "kor", fetch = FetchType.LAZY ,cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JsonManagedReference
+    @JsonIgnore
+    var boards: MutableList<BoardEntity> = mutableListOf()
+
+): Auditable() {
+
+    fun addBoard(board: BoardEntity) {
+        boards.add(board)
+        board.kor = this
+    }
+}

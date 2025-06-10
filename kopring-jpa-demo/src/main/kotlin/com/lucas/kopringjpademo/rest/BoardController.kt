@@ -1,5 +1,7 @@
 package com.lucas.kopringjpademo.rest
 
+import com.lucas.kopringjpademo.modules.board.dto.BoardKorDTO
+import com.lucas.kopringjpademo.modules.board.dto.BoardWithKorDTO
 import com.lucas.kopringjpademo.modules.board.entity.BoardEntity
 import com.lucas.kopringjpademo.modules.board.service.BoardService
 import org.springframework.http.ResponseEntity
@@ -33,4 +35,16 @@ class BoardController(
         return ResponseEntity.ok(board)
     }
 
+    // ----------------- DTO --------------------------------
+    @GetMapping("/api/board/with-kor/{id}")
+    fun getBoardWithKorById(@PathVariable id: Long): ResponseEntity<BoardWithKorDTO> {
+        val boardWithKor = boardService.getBoardWithKorById(id)
+        return ResponseEntity.ok(boardWithKor)
+    }
+
+    @GetMapping("/api/board-kor/{id}")
+    fun getBoardKorById(@PathVariable id: Long): ResponseEntity<BoardKorDTO> {
+        val boardWithKor = boardService.getBoardKorById(id)
+        return ResponseEntity.ok(boardWithKor)
+    }
 }

@@ -105,10 +105,10 @@ class KorServiceTest : BehaviorSpec({
 
             Then("korEntity 를 반환한다") {
                 assertSoftly(result){
-                    it.id shouldBe 1
-                    it.name shouldBe "Test"
-                    it.age shouldBe 30
-                    it.isActive shouldBe true
+                    it?.id shouldBe 1
+                    it?.name shouldBe "Test"
+                    it?.age shouldBe 30
+                    it?.isActive shouldBe true
                 }
             }
         }

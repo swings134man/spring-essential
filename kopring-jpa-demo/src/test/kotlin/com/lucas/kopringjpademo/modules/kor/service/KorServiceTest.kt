@@ -8,6 +8,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import java.util.Optional
 
 class KorServiceTest : BehaviorSpec({
 
@@ -98,7 +99,8 @@ class KorServiceTest : BehaviorSpec({
         val korEntity = KorEntity(id = 1, name = "Test", age = 30, isActive = true)
 
         // 👉 Mock 동작 정의
-        every { korRepository.findOneById(1) } returns korEntity
+        every { korRepository.findById(1) } returns Optional.of(korEntity)
+        every { korRepository.findById(2) } returns Optional.empty()
 
         When("korEntity 를 id로 조회할때") {
             val result = korService.findById(1)

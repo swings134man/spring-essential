@@ -41,6 +41,10 @@ dependencies {
     runtimeOnly ("com.h2database:h2") // h2 for local
     annotationProcessor("org.projectlombok:lombok")
 
+    // Querydsl
+    implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -72,4 +76,12 @@ noArg {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+sourceSets["main"].java.srcDirs("build/generated/source/kapt/main")
+
+tasks.named("clean") {
+    doLast {
+        file("build/generated").deleteRecursively()
+    }
 }

@@ -41,9 +41,9 @@ dependencies {
     runtimeOnly ("com.h2database:h2") // h2 for local
     annotationProcessor("org.projectlombok:lombok")
 
-    // Querydsl
-    implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
-    kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
+    // Openfeign QueryDSL
+    implementation("io.github.openfeign.querydsl:querydsl-jpa:7.0")
+    kapt("io.github.openfeign.querydsl:querydsl-apt:7.0:jakarta")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")

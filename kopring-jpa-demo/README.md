@@ -6,6 +6,7 @@
 > - Kotlin 1.9.25
 > - spring boot 3.3.12
 > - PostgreSQL 17-alpine
+> - OpenFeign QueryDSL 7.0
 
 - DTO 관련 변환 응답 -> `BoardEntity` 참고
 - QueryDSL 관련 -> `dslEntity` 참고
@@ -27,6 +28,8 @@
 ---
 ## QueryDSL 사용 Tips
 > `QueryDsl` 은 사실상 개발중단 되었으며, `OpenFeign` + `KSP` 로 대체되고 있다. -> `kapt`-> `KSP` 사용 권장
+> - OpenFeign QueryDSL 로 마이그레이션 가능, 6.10.1 버전은 Order 관련 취약점을 수정한 버전이며, Kapt 를 지원함.(KSP 마이그레이션 안해도된다.)
+> - 가장 안정화된 버전은 `6.11`, 가장 최신 버전은 `7.0` 이다.
 
 - QueryDSl 을 사용하기 위해서는 기존의 Java 기반에서 사용하던것과 유사하다.(설정, 사용법)
 - 다만 Kotlin 에서는 `kapt` 를 사용하여 Annotation Processor 를 사용해야 한다.
@@ -36,6 +39,25 @@
 > 아래의 설정은 `최신`, `옛날` 2가지 버전이 있는데 gradle 8.x^, Kotlin 1.9.x, querydsl 5.1^ 부터는 `최신`을 사용하면 된다.  
 - 최신버전의 경우  `build/generated/source/kapt/main` 경로에 `QClass` 파일이 기본적으로 생성된다. 
   - `sourceSets` 를 통해 `/build/...` 아래경로가 컴파일/소스 경로로 인식되지 않는걸 인식하게 해주는것.(QClass 를 인식하기 위함)  
+
+
+### build.gradle.kts 설정 (OpenFeign QueryDSL 버전) -> 이걸 사용할것!! (6.11 이상)
+```kotlin
+dependencies {
+  // Querydsl
+  implementation("io.github.openfeign.querydsl:querydsl-jpa:7.0")
+  kapt("io.github.openfeign.querydsl:querydsl-apt:7.0:jakarta")
+}
+
+// Query DSL Configuration
+sourceSets["main"].java.srcDirs("build/generated/source/kapt/main")
+
+tasks.named("clean") {
+  doLast {
+    file("build/generated").deleteRecursively()
+  }
+}
+```
 
 ### build.gradle.kts 설정 (최신 버전)
 ```kotlin

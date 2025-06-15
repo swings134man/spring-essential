@@ -1,6 +1,7 @@
 package com.lucas.kopringjpademo.modules.dsl.repository
 
 import com.lucas.kopringjpademo.common.PageResponse
+import com.lucas.kopringjpademo.modules.dsl.dto.DslResponseDTO
 import com.lucas.kopringjpademo.modules.dsl.entity.DslEntity
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -18,7 +19,10 @@ interface DslCustomRepository {
 
     fun findByNameIn(names: List<String>): List<DslEntity>
 
-    fun findByNamePaging(name: String, pageable: Pageable): Page<DslEntity>
+    // DTO Response
+    fun findByAddressLike(address: String): List<DslResponseDTO>
 
+    // 페이징
+    fun findByNamePaging(name: String, pageable: Pageable): Page<DslEntity>
     fun findByNamePagingUtil(name: String, pageable: Pageable): PageResponse<DslEntity>
 }

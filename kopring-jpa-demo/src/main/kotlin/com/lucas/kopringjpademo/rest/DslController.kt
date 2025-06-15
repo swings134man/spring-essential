@@ -1,6 +1,7 @@
 package com.lucas.kopringjpademo.rest
 
 import com.lucas.kopringjpademo.common.PageResponse
+import com.lucas.kopringjpademo.modules.dsl.dto.DslResponseDTO
 import com.lucas.kopringjpademo.modules.dsl.entity.DslEntity
 import com.lucas.kopringjpademo.modules.dsl.service.DslService
 import org.springframework.data.domain.Page
@@ -28,6 +29,14 @@ class DslController(
         val result = dslService.findByNameIn(names)
         return ResponseEntity.ok(result)
     }
+
+    // DTO Response
+    @GetMapping("/api/dsl/address/like")
+    fun findByAddressLike(@RequestParam address: String): ResponseEntity<List<DslResponseDTO>?> {
+        val result = dslService.findByAddressLike(address)
+        return ResponseEntity.ok(result)
+    }
+
 
     // Entity 가 아닌 Pageable 을 포함한 DTO 를 Response 하는것이 JSON Serialize 에 유리함.
     @GetMapping("/api/dsl/paging")

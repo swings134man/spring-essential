@@ -2,6 +2,7 @@ package com.lucas.kopringjpademo.modules.dsl.service
 
 import com.lucas.kopringjpademo.common.PageResponse
 import com.lucas.kopringjpademo.common.toPageResponse
+import com.lucas.kopringjpademo.modules.dsl.dto.DslResponseDTO
 import com.lucas.kopringjpademo.modules.dsl.entity.DslEntity
 import com.lucas.kopringjpademo.modules.dsl.repository.DslRepository
 import org.springframework.data.domain.Page
@@ -23,6 +24,13 @@ class DslService(
     fun findByNameIn(names: List<String>): List<DslEntity> {
         return dslRepository.findByNameIn(names)
     }
+
+    // DTO Response
+    @Transactional(readOnly = true)
+    fun findByAddressLike(address: String): List<DslResponseDTO> {
+        return dslRepository.findByAddressLike(address)
+    }
+
 
     // 공통 Page DTO 를 사용하지 않은 Paging Function
     @Transactional(readOnly = true)

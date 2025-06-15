@@ -1,6 +1,8 @@
 package com.lucas.kopringjpademo.modules.dsl.repository
 
 import com.lucas.kopringjpademo.common.PageResponse
+import com.lucas.kopringjpademo.modules.dsl.dto.DslResponseDTO
+import com.lucas.kopringjpademo.modules.dsl.dto.toResponseDTO
 import com.lucas.kopringjpademo.modules.dsl.entity.DslEntity
 import com.lucas.kopringjpademo.modules.dsl.entity.QDslEntity
 import com.lucas.kopringjpademo.utils.PagingSupportUtil.applyPaging
@@ -27,6 +29,15 @@ class DslCustomRepositoryImpl(
             .selectFrom(QDslEntity.dslEntity)
             .where(QDslEntity.dslEntity.name.`in`(names))
             .fetch()
+    }
+
+    // DTO Response
+    override fun findByAddressLike(address: String): List<DslResponseDTO> {
+        return queryFactory
+            .selectFrom(QDslEntity.dslEntity)
+            .where(QDslEntity.dslEntity.address.like("%$address%"))
+            .fetch()
+            .map { it.toResponseDTO() }
     }
 
     // Paging 의 경우 전통적인 방법론으로는: content 쿼리와 count 쿼리를 따로 실행 후 Page 타입으로 return 해야함.

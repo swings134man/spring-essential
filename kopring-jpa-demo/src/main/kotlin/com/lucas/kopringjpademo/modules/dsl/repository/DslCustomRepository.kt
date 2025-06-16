@@ -25,4 +25,6 @@ interface DslCustomRepository {
     // 페이징
     fun findByNamePaging(name: String, pageable: Pageable): Page<DslEntity>
     fun findByNamePagingUtil(name: String, pageable: Pageable): PageResponse<DslEntity>
+    fun findByNamePagingOnlyData(name: String, pageable: Pageable): List<DslEntity>
+    fun findByNameUsingSupport(name: String, pageable: Pageable): List<DslEntity?>?
 }

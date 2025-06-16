@@ -37,6 +37,7 @@ class DslController(
         return ResponseEntity.ok(result)
     }
 
+    // ---------------------------------------------- Paging ----------------------------------------------
 
     // Entity 가 아닌 Pageable 을 포함한 DTO 를 Response 하는것이 JSON Serialize 에 유리함.
     @GetMapping("/api/dsl/paging")
@@ -56,6 +57,13 @@ class DslController(
     @GetMapping("/api/dsl/paging/util")
     fun findByNamePagingUtil(@RequestParam name: String?, pageable: Pageable): ResponseEntity<PageResponse<DslEntity>> {
         val result = dslService.findByNamePagingUtil(name ?: "", pageable)
+        return ResponseEntity.ok(result)
+    }
+
+    // QuerydslRepositorySupport 를 사용한 Paging function sample
+    @GetMapping("/api/dsl/paging/support")
+    fun findByNamePagingQuerydslSupport(@RequestParam name: String?, pageable: Pageable): ResponseEntity<List<DslEntity?>?> {
+        val result = dslService.findByNamePagingQuerydslSupport(name ?: "", pageable)
         return ResponseEntity.ok(result)
     }
 }

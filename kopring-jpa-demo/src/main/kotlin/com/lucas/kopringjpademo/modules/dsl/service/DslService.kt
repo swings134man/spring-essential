@@ -31,6 +31,7 @@ class DslService(
         return dslRepository.findByAddressLike(address)
     }
 
+    // ---------------------------------------------- Paging ----------------------------------------------
 
     // 공통 Page DTO 를 사용하지 않은 Paging Function
     @Transactional(readOnly = true)
@@ -44,10 +45,16 @@ class DslService(
         return dslRepository.findByNamePaging(name, pageable).toPageResponse()
     }
 
-    // 공통 Page Util 을 사용한 function
+    // BEST Practice: 공통 Page Util 을 사용한 function
     @Transactional(readOnly = true)
     fun findByNamePagingUtil(name: String, pageable: Pageable): PageResponse<DslEntity> {
         return dslRepository.findByNamePagingUtil(name, pageable)
+    }
+
+    // QuerydslRepositorySupport 를 사용한 Paging function sample
+    @Transactional(readOnly = true)
+    fun findByNamePagingQuerydslSupport(name: String, pageable: Pageable): List<DslEntity?>? {
+        return dslRepository.findByNameUsingSupport(name, pageable)
     }
 
 }

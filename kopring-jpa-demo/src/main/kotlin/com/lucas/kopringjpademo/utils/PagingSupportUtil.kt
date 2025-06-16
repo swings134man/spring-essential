@@ -33,3 +33,10 @@ object PagingSupportUtil {
     }
 
 }
+
+// QueryDSL 쿼리 작성시 Chaining 방식으로 Pageable 을 적용할 수 있는 확장 함수
+fun <T> JPAQuery<T>.withPageable(pageable: Pageable): JPAQuery<T> {
+    return this.limit(pageable.pageSize.toLong())
+        .offset(pageable.offset)
+}
+

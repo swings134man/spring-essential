@@ -9,7 +9,7 @@
 > - OpenFeign QueryDSL 7.0
 
 - DTO 관련 변환 응답 -> `BoardEntity` 참고
-- QueryDSL 관련 -> `dslEntity` 참고
+- QueryDSL + Paging 관련 -> `dslEntity` 참고
 
 > ### Tips
 > - Entity 자체를 return 할때 발생하는 문제 
@@ -115,3 +115,17 @@ kapt {
     generateStubs = true // QueryDsl(gradle 8.x, kotlin 1.9.x 부터 필요없음)
 }
 ```
+---
+## Paging 관련 
+- 페이징 샘플의 경우 `dsl` entity 를 확인!
+  - 해당 repo 의 `dsl` repository 에서 카운트가 있는것과 없는것을 구분해야함, 또한 유틸을 어떻게 사용했는지 확인.
+- 페이징은 front 와 server 간의 협의가 필요함.
+  - 몇페이지 부터인지, 몇개씩 가져올건지, 전체 데이터수 (카운트수)는 필요한지, 계산은 어떻게 어디서 할것인지 등등,,
+> - 서버가 단순히 List<T> 로 데이터만 내려줄 경우 (offset, limit) 만 사용
+>   - 프론트에서 전체 데이터 수를 알수 없기 때문에,(더보기, 무한스크롤) 등으로 구현해야함. -> 페이지 내비게이션 구현 어려움.
+- 즉 페이지 네비게이션을 구현하기 위해서는 
+  - 서버에서, (데이터 리스트, 현재 페이지 번호, 전체 데이터수, 전체 페이지수) 를 반환해야 한다.
+  - `PageImpl(content, pageable, count)` 반환 필요 
+>  - -> 데이터, 페이징에 대한정보들(현재 페이지(page),  전체 페이지 수(total Pages), 전체데이터수(total Elements), 보여줄 데이터 수(size), 정렬 정보(sort)) 등등
+- Best Practice 는 `service.findByNamePagingUtil()` 참고!
+  - 공통 쿼리 사용 + Paging DTO 응답 사용

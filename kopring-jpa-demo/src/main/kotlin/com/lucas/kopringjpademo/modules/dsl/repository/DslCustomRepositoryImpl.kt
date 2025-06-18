@@ -77,7 +77,6 @@ class DslCustomRepositoryImpl(
         pageable: Pageable
     ): PageResponse<DslEntity> {
         return applyPaging(
-            queryFactory = queryFactory,
             pageable = pageable,
             contentQuery = {
                 queryFactory

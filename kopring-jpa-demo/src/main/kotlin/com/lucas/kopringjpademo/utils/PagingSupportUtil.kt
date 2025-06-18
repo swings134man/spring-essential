@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable
 object PagingSupportUtil {
 
     fun <T: Any> applyPaging (
-        queryFactory: JPAQueryFactory,
         pageable: Pageable,
         contentQuery: () -> JPAQuery<T>,
         countQuery: (() -> JPAQuery<Long>)? = null

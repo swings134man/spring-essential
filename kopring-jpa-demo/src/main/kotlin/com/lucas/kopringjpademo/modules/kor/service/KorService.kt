@@ -1,13 +1,15 @@
 package com.lucas.kopringjpademo.modules.kor.service
 
 import com.lucas.kopringjpademo.modules.kor.entity.KorEntity
+import com.lucas.kopringjpademo.modules.kor.repository.KorCommonRepository
 import com.lucas.kopringjpademo.modules.kor.repository.KorRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class KorService(
-    private val korRepository: KorRepository
+    private val korRepository: KorRepository,
+    private val korCommonRepository: KorCommonRepository,
 ) {
 
     @Transactional
@@ -45,4 +47,17 @@ class KorService(
         )
     }
 
+    // ---------------------------------------------- Common Repository ----------------------------------------------
+    // Common Repo's QueryDSL
+    @Transactional(readOnly = true)
+    fun findByAgeGreaterThan(age: Int): List<KorEntity> {
+        return korCommonRepository.findByAgeGreaterThan(age)
+    }
+
+    // Common Repo's JpaRepository
+    @Transactional(readOnly = true)
+    fun findByIdKor(id: Long): KorEntity? {
+        return korCommonRepository.findById(id)
+            .orElseThrow { IllegalArgumentException("Kor with id $id not found") }
+    }
 }

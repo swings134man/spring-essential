@@ -31,4 +31,16 @@ class KorController(
         val result = korService.findById(id)
         return ResponseEntity.ok(result)
     }
+
+    @GetMapping("/api/kor/age/{age}")
+    fun findByAgeGreaterThan(@PathVariable(value = "age") age: Int): ResponseEntity<List<KorEntity>?> {
+        val result = korService.findByAgeGreaterThan(age)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/api/kor/id/{id}")
+    fun findByIdKor(@PathVariable(value = "id") id: Long): ResponseEntity<KorEntity?> {
+        val result = korService.findByIdKor(id)
+        return ResponseEntity.ok(result)
+    }
 }

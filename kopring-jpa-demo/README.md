@@ -8,8 +8,14 @@
 > - PostgreSQL 17-alpine
 > - OpenFeign QueryDSL 7.0
 
+### 각 Sample 별 Class, Package 참조!
 - DTO 관련 변환 응답 -> `BoardEntity` 참고
 - QueryDSL + Paging 관련 -> `dslEntity` 참고
+  - CommonRepository 사용은 -> `KorCommonRepository`, `CommonJpaRepository` 참고 
+
+<br>
+
+--- 
 
 > ### Tips
 > - Entity 자체를 return 할때 발생하는 문제 
@@ -115,6 +121,8 @@ kapt {
     generateStubs = true // QueryDsl(gradle 8.x, kotlin 1.9.x 부터 필요없음)
 }
 ```
+<br>
+
 ---
 ## Paging 관련 
 - 페이징 샘플의 경우 `dsl` entity 를 확인!
@@ -129,3 +137,35 @@ kapt {
 >  - -> 데이터, 페이징에 대한정보들(현재 페이지(page),  전체 페이지 수(total Pages), 전체데이터수(total Elements), 보여줄 데이터 수(size), 정렬 정보(sort)) 등등
 - Best Practice 는 `service.findByNamePagingUtil()` 참고!
   - 공통 쿼리 사용 + Paging DTO 응답 사용
+  
+<br>
+
+---
+## (공통)Common JPA Repository
+- JPA 의 기본 기능 findBy~, save, delete, count 를 사용할 수 있는 SimpleJpaRepository + QueryDsl 을 사용가능 하게하는 공통 Repository
+- 샘플은 `KorCommonRepository`, `CommonJpaRepository` 를 참고
+
+```mermaid
+classDiagram
+    %% CommonJpaRepository extends SimpleJpaRepository
+    CommonJpaRepository <|-- SimpleJpaRepository : "extends"
+    %% KorCommonRepository extends  CommonJpaRepository  
+    KorCommonRepository <|-- CommonJpaRepository : "extends"
+
+
+  class SimpleJpaRepository {
+    + findById()
+    + findAll()
+    + save()
+    + delete()
+    + count()
+  }
+
+  class CommonJpaRepository {
+      default Methods() ...
+  }
+  class KorCommonRepository {
+    + CustomQueryDSLMethods()
+  }
+
+```

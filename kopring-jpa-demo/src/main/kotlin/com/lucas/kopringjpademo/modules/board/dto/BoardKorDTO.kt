@@ -25,3 +25,13 @@ fun BoardEntity.toBoardKorDTO(): BoardKorDTO {
         kor = this.kor
     )
 }
+
+fun toBoardKorDTO(board: BoardEntity?, kor: KorEntity?): BoardKorDTO {
+    requireNotNull(board) { "board는 null일 수 없습니다." }
+    return BoardKorDTO(
+        id = board.id,
+        title = board.title,
+        content = board.content,
+        kor = kor
+    )
+}

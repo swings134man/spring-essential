@@ -1,5 +1,6 @@
 # Kopring-jpa-demo 
 - Kotlin + Spring Boot + JPA + QueryDSL Sample Project
+  - 2025.07.11) > Coroutine 사용 예제 추가 [코루틴 관련 문서로 이동](./Coroutine.md)
 
 > ### Versions
 > - java 17
@@ -7,11 +8,27 @@
 > - spring boot 3.3.12
 > - PostgreSQL 17-alpine
 > - OpenFeign QueryDSL 7.0
+> - Coroutine 1.8.0
 
 ### 각 Sample 별 Class, Package 참조!
 - DTO 관련 변환 응답 -> `BoardEntity` 참고
 - QueryDSL + Paging 관련 -> `dslEntity` 참고
   - CommonRepository 사용은 -> `KorCommonRepository`, `CommonJpaRepository` 참고 
+
+```text
+├── common
+├── configs
+├── utils
+├── rest
+│
+├── modules
+│   ├── board (JPA + DTO 반환)
+│   ├── dsl (QueryDSL + Paging)
+│   ├── kor (JPA + QueryDSL 의 Common Repository 활용)
+│   └── coroutines (Coroutine 사용 예제)
+└── main.kt
+``` 
+
 
 <br>
 

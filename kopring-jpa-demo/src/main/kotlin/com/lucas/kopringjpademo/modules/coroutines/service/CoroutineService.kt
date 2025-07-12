@@ -1,10 +1,10 @@
 package com.lucas.kopringjpademo.modules.coroutines.service
 
+import com.lucas.kopringjpademo.common.logger
 import com.lucas.kopringjpademo.modules.board.dto.BoardKorDTO
 import com.lucas.kopringjpademo.modules.board.dto.toBoardKorDTO
 import com.lucas.kopringjpademo.modules.board.service.BoardService
 import com.lucas.kopringjpademo.modules.kor.service.KorService
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Service
@@ -23,6 +23,9 @@ class CoroutineService (
     private val boardService: BoardService,
     private val korService: KorService,
 ){
+
+    val logger = logger()
+
 
     /**
      * @author: lucaskang(swings134man)
@@ -49,7 +52,7 @@ class CoroutineService (
             result = toBoardKorDTO(boardResult, korResult)
         }// millis
 
-        println("Coroutine findById() time: $times ms")
+        logger.info("Coroutine findById() time: {} ms", times)
 
         return@coroutineScope result
     }//findById
@@ -74,7 +77,7 @@ class CoroutineService (
             result = toBoardKorDTO(board, kor)
         }
 
-        println("notCoFindById() time: $times ms")
+        logger.info("notCoFindById() time: {} ms", times)
 
         return result
     }

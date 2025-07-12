@@ -3,8 +3,11 @@ package com.lucas.kopringjpademo.modules.coroutines.service
 import com.lucas.kopringjpademo.common.logger
 import com.lucas.kopringjpademo.modules.board.dto.BoardKorDTO
 import com.lucas.kopringjpademo.modules.board.dto.toBoardKorDTO
+import com.lucas.kopringjpademo.modules.board.repository.BoardRepository
 import com.lucas.kopringjpademo.modules.board.service.BoardService
+import com.lucas.kopringjpademo.modules.kor.repository.KorRepository
 import com.lucas.kopringjpademo.modules.kor.service.KorService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Service
@@ -22,6 +25,9 @@ import kotlin.system.measureTimeMillis
 class CoroutineService (
     private val boardService: BoardService,
     private val korService: KorService,
+
+    private val boardRepository: BoardRepository,
+    private val korRepository: KorRepository
 ){
 
     val logger = logger()
@@ -42,14 +48,10 @@ class CoroutineService (
 
         val times = measureTimeMillis {
             // 2개의 작업 task
-            val board = async { boardService.getBoardById(id) }
-            val kor = async { korService.findById(id) }
+            val board = async(Dispatchers.IO) { boardRepository.findById(id).orElseThrow() }
+            val kor = async(Dispatchers.IO) { korRepository.findById(id).orElseThrow() }
 
-            // Task Run
-            val boardResult = board.await()
-            val korResult = kor.await()
-
-            result = toBoardKorDTO(boardResult, korResult)
+            result = toBoardKorDTO(board.await(), kor.await())
         }// millis
 
         logger.info("Coroutine findById() time: {} ms", times)

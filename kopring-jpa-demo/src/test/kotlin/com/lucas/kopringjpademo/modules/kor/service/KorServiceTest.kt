@@ -1,6 +1,7 @@
 package com.lucas.kopringjpademo.modules.kor.service
 
 import com.lucas.kopringjpademo.modules.kor.entity.KorEntity
+import com.lucas.kopringjpademo.modules.kor.repository.KorCommonRepository
 import com.lucas.kopringjpademo.modules.kor.repository.KorRepository
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
@@ -14,9 +15,10 @@ class KorServiceTest : BehaviorSpec({
 
     // MockK
     val korRepository: KorRepository = mockk()
+    val korCommonRepository: KorCommonRepository = mockk()
 
     // service Object
-    val korService = KorService(korRepository)
+    val korService = KorService(korRepository, korCommonRepository)
 
     Given("kor - save") {
 

@@ -1,8 +1,28 @@
 # Kotlin Test 코드
 
+#### 의존성 최종 
+```kotlin
+testImplementation("io.kotest:kotest-runner-junit5:5.8.0") // kotest
+testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2") // kotest-extensions
+testImplementation("io.mockk:mockk:1.13.8") // MockK
+```
+
+---
+
 - 자바에서는 Mocking 은 Mockito 를 사용하여 진행하지만,
 - 코틀린에서는 MockK 를 사용한다.
 > testImplementation("io.mockk:mockk:1.13.8")
+
+---
+- 만약 통합테스트(DB 연동 테스트) 를 진행한다면 아래의 의존성을 추가하여야 한다.
+  - `testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2") // kotest-extensions`
+- Spring Extensions 를 통해 `Bean` 주입 오류에 대한것을 해결할 수 있다.
+  - 또한 Test Class 내부에 `@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)`
+    - 를 추가하여 Test 시 Bean 주입을 처리할 수 있다.
+  - 또한 Class Body 내부에 `extension(SpringExtension) ` 를 추가하여 Spring Extension 을 사용해야한다.
+> [통합테스트 Sample 코드 참고](#sample-test-code)
+
+---
 
 #### Sample interface
 - `Mockito`
@@ -77,3 +97,82 @@ class AnimalFarmTest {
 >   - should, shouldNot, shouldBe, shouldNotBe 등과 같은 방식으로 변경된다.
 >   - 'a' shouldBe 'a', isMarried.shouldBeTrue() 와 같은 방식
 >   - 반복적으로 특정객체의 하위값들을 전부 비교하는 경우 assertSoftly 를 사용하여 여러 개의 assert 를 한번에 처리할 수 있다.
+
+---
+
+### Sample Test Code
+```kotlin
+package com.lucas.kotlincoflux.modules.board.service
+
+import com.lucas.kotlincoflux.modules.board.model.Board
+import com.lucas.kotlincoflux.modules.board.repository.BoardRepository
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.extensions.spring.SpringExtension
+import io.kotest.matchers.shouldBe
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.TestConstructor
+
+@ActiveProfiles("test")
+@SpringBootTest
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class BoardServiceTest(
+    private val boardService: BoardService,
+    private val boardRepository: BoardRepository
+) : BehaviorSpec({
+
+    extension(SpringExtension)
+
+
+    given("board create - Success Test") {
+        When("새로운 게시글을 작성하면") {
+            then("게시글이 성공적으로 저장되어야 한다") {
+                val board = Board(
+                    title = "제목입니다",
+                    content = "내용입니다"
+                )
+
+                val savedBoard = boardService.save(board)
+
+                savedBoard.id shouldBe 1L
+                savedBoard.title shouldBe "제목입니다"
+                savedBoard.content shouldBe "내용입니다"
+
+                // 데이터베이스에 저장된 게시글 확인
+                val results = boardService.getAllBoards()
+                println("results: $results")
+                results.size shouldBe 1
+            }
+        }
+    }
+
+
+    given("board create - Rollback Test") {
+
+        beforeTest {
+            // 테스트 전에 데이터베이스 초기화
+            boardRepository.deleteAll()
+        }
+
+        When("중간에 예외가 나면") {
+            then("데이터는 롤백되어야 한다") {
+                try {
+                    val board = Board(
+                        title = "제목입니다1",
+                        content = "내용입니다1"
+                    )
+
+                    boardRepository.save(board)
+
+                    throw RuntimeException("강제 예외")
+
+                } catch (_: Exception) {
+                    val results = boardService.getAllBoards()
+                    println("results: $results")
+                    results.size shouldBe 0
+                }
+            }
+        }
+    }
+})
+```

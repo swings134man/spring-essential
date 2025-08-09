@@ -71,4 +71,10 @@ class BoardService(
         return boardRepository.findByBoardAndKor(id)?.toBoardKorDTO()
             ?: throw IllegalArgumentException("Board with id $id not found")
     }
+
+    // Repository 에서 DTO 반환
+    @Transactional(readOnly = true)
+    fun getBoardKorDTOById(id: Long): BoardKorDTO {
+        return boardRepository.findByBoardWithKor(id)
+    }
 }

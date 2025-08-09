@@ -47,4 +47,10 @@ class BoardController(
         val boardWithKor = boardService.getBoardKorById(id)
         return ResponseEntity.ok(boardWithKor)
     }
+
+    @GetMapping("/api/dto/{id}")
+    fun getBoardKorDTOById(@PathVariable id: Long): ResponseEntity<BoardKorDTO> {
+        val boardKorDTO = boardService.getBoardKorDTOById(id)
+        return ResponseEntity.ok(boardKorDTO)
+    }
 }

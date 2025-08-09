@@ -18,7 +18,9 @@ spring:
     defer-datasource-initialization: false #fixme
   sql:
     init:
-      mode: never #fixme
+      mode: always #fixme
+      schema-locations: classpath:sql/schema.sql
+      data-locations: classpath:sql/data.sql
 
 
 logging:

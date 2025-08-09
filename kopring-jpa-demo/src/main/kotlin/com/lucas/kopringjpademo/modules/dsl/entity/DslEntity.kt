@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import org.jetbrains.annotations.NotNull
 
 /**
  * DslEntity.kt: QueryDSL 을 위한 예제 Entity
@@ -21,6 +22,9 @@ class DslEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
+    @field:NotNull
     var name: String,
+
+    @field:NotNull
     var address: String,
 ): Auditable()

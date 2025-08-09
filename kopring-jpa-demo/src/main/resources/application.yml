@@ -7,7 +7,7 @@ spring:
     name: kopring-jpa-demo
 
   profiles:
-    active: proxy
+    active: local
 
   config:
     import:

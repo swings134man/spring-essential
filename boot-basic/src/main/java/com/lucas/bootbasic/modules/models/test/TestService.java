@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +34,18 @@ public class TestService {
     @Transactional(readOnly = true)
     public TestEntity findByValue(String value) {
         return repository.findByValue(value).orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public List<TestDTO> findAllWithDto() {
+//        List<TestEntity> entities = repository.findAll();
+//        List<TestDTO> list = entities.stream()
+//                .map(TestDTO::fromEntity)
+//                .toList();
+        // refactor
+        return repository.findAll().stream()
+                .map(TestDTO::fromEntity)
+                .collect(Collectors.toList());
+
     }
 }

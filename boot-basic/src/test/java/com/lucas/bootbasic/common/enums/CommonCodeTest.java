@@ -8,10 +8,10 @@ class CommonCodeTest {
     @Test
     @DisplayName("CommonCode Enum Test")
     void commonCodeEnumTest() {
-        // Enum 의 Key 출력
+        // Enum 의 Value(Code) 출력
         String key = CommonCode.SUCCESS.getCode();
 
-        // Enum 의 Value 출력
+        // Enum 의 Value(Message) 출력
         String value = CommonCode.FAIL.getMessage();
 
         // Enum 의 키워드 자체 출력

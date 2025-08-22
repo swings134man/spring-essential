@@ -7,11 +7,13 @@ import com.lucas.kopringjpademo.modules.board.repository.BoardRepository
 import com.lucas.kopringjpademo.modules.board.service.BoardService
 import com.lucas.kopringjpademo.modules.kor.repository.KorRepository
 import com.lucas.kopringjpademo.modules.kor.service.KorService
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.util.StopWatch
 import kotlin.system.measureTimeMillis
 
 /**
@@ -58,6 +60,30 @@ class CoroutineService (
 
         return@coroutineScope result
     }//findById
+
+    // 이렇게도 사용가능하지만, DB Call 같은 경우는 Blocking + 트랜잭션 경계가 깨질 수 있음
+    // Spring 의 Transaction 은 같은 Coroutine Scope 내에서 관리되는게 좋음 위의 function 처럼
+    @Transactional
+    suspend fun findByIdInner(id: Long): BoardKorDTO {
+        val times = StopWatch()
+        times.start()
+
+        val boardResult = CoroutineScope(Dispatchers.IO).async {
+            boardRepository.findById(id).orElseThrow()
+        }
+
+        val korResult = CoroutineScope(Dispatchers.IO).async {
+            korRepository.findById(id).orElseThrow()
+        }
+
+        val result = toBoardKorDTO(boardResult.await(), korResult.await())
+        logger.info("Coroutine findByIdInner() result: {}", result)
+
+        times.stop()
+        logger.info("Coroutine findByIdInner() time: {} ms", times.totalTimeMillis)
+
+        return result
+    }
 
 
 

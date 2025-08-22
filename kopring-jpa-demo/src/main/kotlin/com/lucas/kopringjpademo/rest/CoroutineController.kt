@@ -28,6 +28,12 @@ class CoroutineController(
         return ResponseEntity.ok(result)
     }
 
+    @GetMapping("/in/{id}")
+    suspend fun findByIdIn(@PathVariable id: Long): ResponseEntity<BoardKorDTO?> {
+        val result = service.findByIdInner(id)
+        return ResponseEntity.ok(result)
+    }
+
 
 
     // -------------------------------------------- Coroutine 사용 X --------------------------------------------

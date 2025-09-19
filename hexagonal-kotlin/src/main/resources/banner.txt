@@ -1,0 +1,10 @@
+${AnsiColor.BRIGHT_RED},--.                                                        ,--.       ,--.            ,--.  ,--.,--.
+${AnsiColor.RED}|  ,---. ,---.,--.  ,--.,--,--. ,---. ,---. ,--,--,  ,--,--.|  |,-----.|  |,-. ,---. ,-'  '-.|  |`--',--,--,
+${AnsiColor.YELLOW}|  .-.  | .-. :\  `'  /' ,-.  || .-. | .-. ||      \' ,-.  ||  |'-----'|     /| .-. |'-.  .-'|  |,--.|      \
+${AnsiColor.BRIGHT_GREEN}|  | |  \   --./  /.  \\ '-'  |' '-' ' '-' '|  ||  |\ '-'  ||  |       |  \  \' '-' '  |  |  |  ||  ||  ||  |
+${AnsiColor.BRIGHT_BLUE}`--' `--'`----'--'  '--'`--`--'.`-  / `---' `--''--' `--`--'`--'       `--'`--'`---'   `--'  `--'`--'`--''--'
+                               `---'
+
+${AnsiColor.RED}Hexagonal-kotlin ${AnsiColor.GREEN}Application
+${AnsiColor.GREEN}::Spring Boot:: ${AnsiColor.DEFAULT}(v${spring-boot.version})
+

@@ -1,0 +1,28 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  h2:
+    console:
+      enabled: true
+
+  # JPA Setting
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: none #fixme
+    defer-datasource-initialization: false #fixme
+  sql:
+    init:
+      mode: always #fixme
+      schema-locations: classpath:sql/schema.sql
+      data-locations: classpath:sql/data.sql
+
+
+logging:
+  level:
+    root: info

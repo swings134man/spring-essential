@@ -1,4 +1,4 @@
-package com.lucas.hexagonalkotlin.common
+package com.lucas.hexagonalkotlin.infrastructure.common
 
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.MappedSuperclass

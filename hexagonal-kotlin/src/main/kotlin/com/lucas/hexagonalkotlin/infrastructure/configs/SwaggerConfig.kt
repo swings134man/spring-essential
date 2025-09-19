@@ -1,4 +1,4 @@
-package com.lucas.hexagonalkotlin.configs
+package com.lucas.hexagonalkotlin.infrastructure.configs
 
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI

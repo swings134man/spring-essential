@@ -26,5 +26,13 @@ class UsersService(
         usersRepository.createUser(domain)
             .let { UsersDto.fromDomain(it) }
 
+    // user update (Password 제외)
+    @Transactional
+    override fun updateUser(domain: Users): UsersDto =
+        domain.id?.let {
+            usersRepository.updateUser(domain)
+                .let(UsersDto::fromDomain)
+        } ?: throw IllegalArgumentException("User ID must not be null for update.")
+
 
 }

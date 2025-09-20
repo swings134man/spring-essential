@@ -35,7 +35,7 @@ class UsersEntity(
             return UsersEntity(
                 id = user.id,
                 email = user.email,
-                password = user.getPassword(),
+                password = user.password,
                 userName = user.userName,
                 phoneNumber = user.phoneNumber,
                 age = user.age,

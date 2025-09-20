@@ -1,7 +1,7 @@
 package com.lucas.hexagonalkotlin.application.users.commands
 
 import com.lucas.hexagonalkotlin.domain.users.dto.UserSaveDto
-import com.lucas.hexagonalkotlin.domain.users.dto.UsersDto
+import com.lucas.hexagonalkotlin.domain.users.dto.UserUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.model.Users
 
 /**
@@ -31,5 +31,21 @@ object UserCommand {
         )
     }
 
+    // 유저 수정용 DTO -> Domain Model 변환(TODO: Password 제외)
+    fun updateToDomain(request: UserUpdateDto): Users {
+        return Users(
+            id = request.id,
+            email = request.email,
+            password = request.password,
+            userName = request.userName,
+            phoneNumber = request.phoneNumber,
+            age = request.age,
+            gender = request.gender,
+            address = request.address,
+            isActive = request.isActive,
+            createdAt = null,
+            updatedAt = null,
+        )
+    }
 
 }

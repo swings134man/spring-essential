@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 class Users(
     val id: Long? = null,
     val email: String,
-    private var password: String,
+    var password: String, // TODO: private 설정시 Command 처리 ?
     var userName: String,
     var phoneNumber: String,
     var age: Int,
@@ -29,7 +29,7 @@ class Users(
         require(age >= 0) { "나이는 음수일 수 없습니다." }
     }
 
-    fun getPassword(): String = password
+//    fun getPassword(): String = password
 
     fun changePassword(newPassword: String) {
         require(newPassword.length >= 8) { "비밀번호는 최소 8자리 이상이어야 합니다." }

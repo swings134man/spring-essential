@@ -29,7 +29,7 @@ data class UsersDto (
             return UsersDto(
                 id = domain.id,
                 email = domain.email,
-                password = domain.getPassword(),
+                password = domain.password,
                 userName = domain.userName,
                 phoneNumber = domain.phoneNumber,
                 age = domain.age,

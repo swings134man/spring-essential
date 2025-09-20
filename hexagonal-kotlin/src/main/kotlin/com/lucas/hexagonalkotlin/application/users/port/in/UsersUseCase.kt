@@ -12,4 +12,5 @@ import com.lucas.hexagonalkotlin.domain.users.model.Users
  */
 interface UsersUseCase {
     fun createUser(domain: Users): UsersDto
+    fun updateUser(domain: Users): UsersDto
 }

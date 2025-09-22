@@ -23,14 +23,12 @@ data class UserSaveDto (
 // User Update DTO
 data class UserUpdateDto(
     val id: Long,
-    val email: String,
-    val password: String,
-    val userName: String,
-    val phoneNumber: String,
-    val age: Int,
-    var gender: String,
-    var address: String,
-    var isActive: Boolean
+    val email: String?,
+    val userName: String?,
+    val age: Int?,
+    var gender: String?,
+    var address: String?,
+    var isActive: Boolean?
 )
 
 // password update

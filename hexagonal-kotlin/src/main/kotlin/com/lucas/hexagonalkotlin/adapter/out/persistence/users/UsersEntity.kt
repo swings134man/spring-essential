@@ -65,4 +65,15 @@ class UsersEntity(
         )
     }
 
+    // Entity field update
+    fun updateWith(domain: Users) {
+        this.email = domain.email
+        this.userName = domain.userName
+        this.age = domain.age
+        this.gender = domain.gender
+        this.address = domain.address
+        this.isActive = domain.isActive
+        this.updatedAt = domain.updatedAt
+    }
+
 }

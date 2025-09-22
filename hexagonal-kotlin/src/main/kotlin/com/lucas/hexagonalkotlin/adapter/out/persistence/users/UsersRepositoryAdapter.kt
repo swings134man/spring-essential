@@ -3,7 +3,6 @@ package com.lucas.hexagonalkotlin.adapter.out.persistence.users
 import com.lucas.hexagonalkotlin.application.users.port.out.UsersRepository
 import com.lucas.hexagonalkotlin.domain.users.model.Users
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
 
 /**
  * UsersRepositoryAdapter.kt: UsersRepository 구현체
@@ -27,17 +26,9 @@ class UsersRepositoryAdapter(
     override fun updateUser(domain: Users): Users =
         usersJpaRepository.findById(domain.id!!)
             .map { entity ->
-                entity.apply {
-                    domain.email.takeIf { it.isNotBlank() }?.let { email = it }
-                    domain.userName.takeIf { it.isNotBlank() }?.let { userName = it }
-                    domain.phoneNumber.takeIf { it.isNotBlank() }?.let { phoneNumber = it }
-                    domain.age.takeIf { it >= 0 }?.let { age = it }
-                    domain.gender.takeIf { it.isNotBlank() }?.let { gender = it }
-                    domain.address.takeIf { it.isNotBlank() }?.let { address = it }
-                    domain.isActive.let { isActive = it }
-                }
+                entity.updateWith(domain)
+                usersJpaRepository.save(entity).toDomain()
             }
-            .map { usersJpaRepository.save(it).toDomain() }
             .orElseThrow { RuntimeException("User not found with id: ${domain.id}") }
 
 

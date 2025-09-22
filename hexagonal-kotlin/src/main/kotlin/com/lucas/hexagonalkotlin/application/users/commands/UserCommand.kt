@@ -24,14 +24,12 @@ sealed class UserCommand {
 
     data class UpdateUserCommand(
         var id: Long,
-        var email: String,
-        var password: String,
-        var userName: String,
-        var phoneNumber: String,
-        var age: Int,
-        var gender: String,
-        var address: String,
-        var isActive: Boolean
+        var email: String?,
+        var userName: String?,
+        var age: Int?,
+        var gender: String?,
+        var address: String?,
+        var isActive: Boolean?
     ): UserCommand()
 
     data class UpdateUserPasswordCommand(

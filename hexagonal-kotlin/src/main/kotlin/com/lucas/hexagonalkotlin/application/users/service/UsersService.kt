@@ -5,8 +5,10 @@ import com.lucas.hexagonalkotlin.application.users.commands.UserCommandMapper
 import com.lucas.hexagonalkotlin.application.users.port.`in`.UsersUseCase
 import com.lucas.hexagonalkotlin.application.users.port.out.UsersRepository
 import com.lucas.hexagonalkotlin.domain.users.dto.UsersDto
+import com.lucas.hexagonalkotlin.domain.users.model.Users
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import kotlin.compareTo
 
 /**
  * UsersService.kt: UsersUseCase 구현체
@@ -28,13 +30,20 @@ class UsersService(
         usersRepository.createUser(userMapper.toDomain(command))
             .let { UsersDto.fromDomain(it) }
 
-    // user update (Password 제외)
+    // user update (Password, phoneNumber 제외)
     @Transactional
-    override fun updateUser(command: UserCommand.UpdateUserCommand): UsersDto =
-        command.id.let {
-            usersRepository.updateUser(userMapper.toDomain(command))
-                .let(UsersDto::fromDomain)
-        }
+    override fun updateUser(command: UserCommand.UpdateUserCommand): UsersDto {
+
+        // domain get
+        val domain = usersRepository.findUserById(command.id)
+            ?: throw RuntimeException("User not found with id: ${command.id}")
+
+        // domain 에 update 된 Command 값 매핑 - null safe check
+        domainUpdate(domain, command)
+
+        return usersRepository.updateUser(domain)
+            .let { UsersDto.fromDomain(it) }
+    }
 
     // update Password
     @Transactional
@@ -56,5 +65,15 @@ class UsersService(
     override fun findUserById(id: Long): UsersDto? =
         usersRepository.findUserById(id)?.let { UsersDto.fromDomain(it) }
 
+
+    // Domain Update - patch 방식
+    private fun domainUpdate(domain: Users, command: UserCommand.UpdateUserCommand) {
+        command.email?.let { if (it.isNotBlank()) domain.email = it }
+        command.userName?.let { if (it.isNotBlank()) domain.userName = it }
+        command.age?.let { if (it >= 0) domain.age = it }
+        command.gender?.let { if (it.isNotBlank()) domain.gender = it }
+        command.address?.let { if (it.isNotBlank()) domain.address = it }
+        command.isActive?.let { domain.isActive = it }
+    }
 
 }

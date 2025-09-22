@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
     kotlin("plugin.jpa") version "1.9.25"
-//    kotlin("kapt") version "1.9.25"
+    kotlin("kapt") version "1.9.25"
 }
 
 group = "com.lucas"
@@ -35,6 +35,8 @@ dependencies {
     implementation ("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.mapstruct:mapstruct:1.5.5.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0") // swagger-ui
 
@@ -50,6 +52,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("io.kotest:kotest-runner-junit5:5.8.0")
     testImplementation("io.mockk:mockk:1.13.8") // MockK
+    kaptTest("org.mapstruct:mapstruct-processor:1.5.2.Final")
 }
 
 kotlin {
@@ -58,9 +61,15 @@ kotlin {
     }
 }
 
-//kapt {
-//    keepJavacAnnotationProcessors = true
-//}
+kapt {
+    keepJavacAnnotationProcessors = true
+    arguments {
+        // Java 17 호환성을 위한 설정
+        arg("mapstruct.defaultComponentModel", "spring")
+        arg("mapstruct.unmappedTargetPolicy", "ignore")
+    }
+
+}
 
 allOpen {
     annotation("jakarta.persistence.Entity")

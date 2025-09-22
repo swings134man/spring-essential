@@ -38,4 +38,16 @@ class UsersRepositoryAdapter(
             }
             .map { usersJpaRepository.save(it).toDomain() }
             .orElseThrow { RuntimeException("User not found with id: ${domain.id}") }
+
+
+    override fun findAllUsers(): List<Users> =
+        usersJpaRepository.findAll().map(UsersEntity::toDomain)
+
+
+    // User 조회 (ID) - 없으면 null
+    override fun findUserById(id: Long): Users? =
+         usersJpaRepository.findById(id)
+                    .map(UsersEntity::toDomain)
+                    .orElse(null)?.let { return it }
+
 }

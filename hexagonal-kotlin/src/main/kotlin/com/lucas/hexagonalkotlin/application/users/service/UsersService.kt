@@ -36,5 +36,14 @@ class UsersService(
                 .let(UsersDto::fromDomain)
         }
 
+    @Transactional(readOnly = true)
+    override fun findAllUsers(): List<UsersDto> =
+        usersRepository.findAllUsers().map { UsersDto.fromDomain(it) }
+
+
+    @Transactional(readOnly = true)
+    override fun findUserById(id: Long): UsersDto? =
+        usersRepository.findUserById(id)?.let { UsersDto.fromDomain(it) }
+
 
 }

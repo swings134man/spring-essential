@@ -6,6 +6,8 @@ import com.lucas.hexagonalkotlin.domain.users.dto.UserSaveDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UsersDto
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -35,6 +37,18 @@ class UsersController(
     @PutMapping
     fun updateUser(@RequestBody dto: UserUpdateDto): ResponseEntity<UsersDto> {
         val result = usersUseCase.updateUser(userMapper.toUpdateCommand(dto))
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping
+    fun findAll(): ResponseEntity<List<UsersDto>?> {
+        val result = usersUseCase.findAllUsers()
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/{id}")
+    fun findById(@PathVariable id: Long): ResponseEntity<UsersDto?> {
+        val result = usersUseCase.findUserById(id)
         return ResponseEntity.ok(result)
     }
 

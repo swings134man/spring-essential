@@ -1,6 +1,5 @@
 package com.lucas.hexagonalkotlin.application.users.port.out
 
-import com.lucas.hexagonalkotlin.adapter.out.persistence.users.UsersEntity
 import com.lucas.hexagonalkotlin.domain.users.model.Users
 
 /**
@@ -13,4 +12,6 @@ import com.lucas.hexagonalkotlin.domain.users.model.Users
 interface UsersRepository {
     fun createUser(domain: Users): Users
     fun updateUser(domain: Users): Users
+    fun findAllUsers(): List<Users>
+    fun findUserById(id: Long): Users?
 }

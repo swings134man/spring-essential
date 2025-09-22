@@ -2,6 +2,7 @@ package com.lucas.hexagonalkotlin.adapter.`in`.web
 
 import com.lucas.hexagonalkotlin.application.users.commands.UserCommandMapper
 import com.lucas.hexagonalkotlin.application.users.port.`in`.UsersUseCase
+import com.lucas.hexagonalkotlin.domain.users.dto.UserPasswordUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserSaveDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UsersDto
@@ -50,6 +51,12 @@ class UsersController(
     fun findById(@PathVariable id: Long): ResponseEntity<UsersDto?> {
         val result = usersUseCase.findUserById(id)
         return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/password")
+    fun changePassword(@RequestBody dto: UserPasswordUpdateDto): ResponseEntity<String> {
+        val result = usersUseCase.updateUserPassword(userMapper.toUpdatePasswordCommand(dto))
+        return ResponseEntity.ok("Password updated successfully")
     }
 
 }

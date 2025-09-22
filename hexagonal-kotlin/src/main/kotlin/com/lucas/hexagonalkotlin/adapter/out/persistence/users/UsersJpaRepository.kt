@@ -1,6 +1,10 @@
 package com.lucas.hexagonalkotlin.adapter.out.persistence.users
 
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
+import java.time.LocalDateTime
 
 /**
  * UsersJpaRepository.kt: JPA Repository
@@ -10,4 +14,12 @@ import org.springframework.data.jpa.repository.JpaRepository
  * @description: JpaRepository 를 상속하여 구현, 실제 DB CRUD 쿼리와 관련된 내용이 들어감
  */
 interface UsersJpaRepository : JpaRepository<UsersEntity, Long>{
+
+    @Modifying
+    @Query("UPDATE UsersEntity u SET u.password = :password, u.updatedAt = :updatedAt WHERE u.id = :id")
+    fun updatePasswordById(
+        @Param("id") id: Long,
+        @Param("password") password: String,
+        @Param("updatedAt") updatedAt: LocalDateTime
+    ): Int
 }

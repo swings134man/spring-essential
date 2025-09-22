@@ -36,6 +36,17 @@ class UsersService(
                 .let(UsersDto::fromDomain)
         }
 
+    // update Password
+    @Transactional
+    override fun updateUserPassword(command: UserCommand.UpdateUserPasswordCommand) {
+        val find = usersRepository.findUserById(command.id) // domain
+            ?: throw RuntimeException("User not found with id: ${command.id}")
+
+        find.changePassword(command.newPassword)
+
+        usersRepository.updateUserPassword(find)
+    }
+
     @Transactional(readOnly = true)
     override fun findAllUsers(): List<UsersDto> =
         usersRepository.findAllUsers().map { UsersDto.fromDomain(it) }

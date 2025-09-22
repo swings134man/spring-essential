@@ -13,6 +13,7 @@ import com.lucas.hexagonalkotlin.domain.users.dto.UsersDto
 interface UsersUseCase {
     fun createUser(command: UserCommand.CreateUserCommand): UsersDto
     fun updateUser(command: UserCommand.UpdateUserCommand): UsersDto
+    fun updateUserPassword(command: UserCommand.UpdateUserPasswordCommand)
     fun findAllUsers(): List<UsersDto>
     fun findUserById(id: Long): UsersDto?
 }

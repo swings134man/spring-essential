@@ -32,3 +32,9 @@ data class UserUpdateDto(
     var address: String,
     var isActive: Boolean
 )
+
+// password update
+data class UserPasswordUpdateDto(
+    val id: Long,
+    val newPassword: String
+)

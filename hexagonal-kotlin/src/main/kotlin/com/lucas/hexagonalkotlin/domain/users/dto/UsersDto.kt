@@ -29,7 +29,7 @@ data class UsersDto (
             return UsersDto(
                 id = domain.id,
                 email = domain.email,
-                password = domain.password,
+                password = domain.getPassword(),
                 userName = domain.userName,
                 phoneNumber = domain.phoneNumber,
                 age = domain.age,
@@ -40,6 +40,24 @@ data class UsersDto (
                 updatedAt = domain.updatedAt
             )
         }
+
+        fun toDomain(dto: UsersDto): Users {
+            return Users(
+                id = dto.id,
+                email = dto.email,
+                password = dto.getPassword(),
+                userName = dto.userName,
+                phoneNumber = dto.phoneNumber,
+                age = dto.age,
+                gender = dto.gender,
+                address = dto.address,
+                isActive = dto.isActive,
+                createdAt = dto.createdAt,
+                updatedAt = dto.updatedAt
+            )
+        }
     }
+
+    fun getPassword(): String = password
 
 }

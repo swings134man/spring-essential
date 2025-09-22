@@ -14,4 +14,5 @@ interface UsersRepository {
     fun updateUser(domain: Users): Users
     fun findAllUsers(): List<Users>
     fun findUserById(id: Long): Users?
+    fun updateUserPassword(domain: Users)
 }

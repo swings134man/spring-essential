@@ -3,6 +3,7 @@ package com.lucas.hexagonalkotlin.adapter.out.persistence.users
 import com.lucas.hexagonalkotlin.application.users.port.out.UsersRepository
 import com.lucas.hexagonalkotlin.domain.users.model.Users
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 /**
  * UsersRepositoryAdapter.kt: UsersRepository 구현체
@@ -49,5 +50,10 @@ class UsersRepositoryAdapter(
          usersJpaRepository.findById(id)
                     .map(UsersEntity::toDomain)
                     .orElse(null)?.let { return it }
+
+    // password 수정
+    override fun updateUserPassword(domain: Users) {
+        usersJpaRepository.updatePasswordById(domain.id!!, domain.getPassword(), domain.updatedAt!!)
+    }
 
 }

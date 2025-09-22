@@ -1,9 +1,10 @@
 package com.lucas.hexagonalkotlin.application.users.service
 
+import com.lucas.hexagonalkotlin.application.users.commands.UserCommand
+import com.lucas.hexagonalkotlin.application.users.commands.UserCommandMapper
 import com.lucas.hexagonalkotlin.application.users.port.`in`.UsersUseCase
 import com.lucas.hexagonalkotlin.application.users.port.out.UsersRepository
 import com.lucas.hexagonalkotlin.domain.users.dto.UsersDto
-import com.lucas.hexagonalkotlin.domain.users.model.Users
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,22 +18,23 @@ import org.springframework.transaction.annotation.Transactional
  */
 @Service
 class UsersService(
-    private val usersRepository: UsersRepository
+    private val usersRepository: UsersRepository,
+    private val userMapper: UserCommandMapper
 ): UsersUseCase{
 
     // User Save
     @Transactional
-    override fun createUser(domain: Users): UsersDto =
-        usersRepository.createUser(domain)
+    override fun createUser(command: UserCommand.CreateUserCommand): UsersDto =
+        usersRepository.createUser(userMapper.toDomain(command))
             .let { UsersDto.fromDomain(it) }
 
     // user update (Password 제외)
     @Transactional
-    override fun updateUser(domain: Users): UsersDto =
-        domain.id?.let {
-            usersRepository.updateUser(domain)
+    override fun updateUser(command: UserCommand.UpdateUserCommand): UsersDto =
+        command.id.let {
+            usersRepository.updateUser(userMapper.toDomain(command))
                 .let(UsersDto::fromDomain)
-        } ?: throw IllegalArgumentException("User ID must not be null for update.")
+        }
 
 
 }

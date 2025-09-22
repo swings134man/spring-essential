@@ -12,7 +12,7 @@ import java.time.LocalDateTime
  */
 data class UsersDto (
     val id: Long? = null,
-    val email: String,
+    var email: String,
     private var password: String,
     var userName: String,
     var phoneNumber: String,

@@ -1,6 +1,6 @@
 package com.lucas.hexagonalkotlin.adapter.`in`.web
 
-import com.lucas.hexagonalkotlin.application.users.commands.UserCommand
+import com.lucas.hexagonalkotlin.application.users.commands.UserCommandMapper
 import com.lucas.hexagonalkotlin.application.users.port.`in`.UsersUseCase
 import com.lucas.hexagonalkotlin.domain.users.dto.UserSaveDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserUpdateDto
@@ -22,18 +22,19 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/users")
 class UsersController(
-    private val usersUseCase: UsersUseCase
+    private val usersUseCase: UsersUseCase,
+    private val userMapper: UserCommandMapper
 ) {
 
     @PostMapping
     fun createUser(@RequestBody dto: UserSaveDto): ResponseEntity<UsersDto> {
-        val result = usersUseCase.createUser(UserCommand.saveToDomain(dto))
+        val result = usersUseCase.createUser(userMapper.toCreateCommand(dto))
         return ResponseEntity.ok(result)
     }
 
     @PutMapping
     fun updateUser(@RequestBody dto: UserUpdateDto): ResponseEntity<UsersDto> {
-        val result = usersUseCase.updateUser(UserCommand.updateToDomain(dto))
+        val result = usersUseCase.updateUser(userMapper.toUpdateCommand(dto))
         return ResponseEntity.ok(result)
     }
 

@@ -11,7 +11,7 @@ import java.time.LocalDateTime
  */
 class Users(
     val id: Long? = null,
-    val email: String,
+    var email: String,
     var password: String, // TODO: private 설정시 Command 처리 ?
     var userName: String,
     var phoneNumber: String,

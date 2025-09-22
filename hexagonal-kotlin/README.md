@@ -45,8 +45,8 @@ sequenceDiagram
     Client->>Controller: HTTP Request<br/>(DTO)
     Note over Controller: DTO to Command
     
-    Controller->>UseCase: Command 전달
-    Note over UseCase: Command to<br/>Domain Model
+    Controller->>UseCase: Command 객체 전달
+    Note over UseCase: Command Object<br/> to<br/>Domain Model
     
     UseCase->>OutPort: Domain Model
     OutPort->>AdapterOut: Domain Model

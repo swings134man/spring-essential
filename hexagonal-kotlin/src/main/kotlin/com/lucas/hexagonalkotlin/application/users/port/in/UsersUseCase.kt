@@ -1,7 +1,7 @@
 package com.lucas.hexagonalkotlin.application.users.port.`in`
 
+import com.lucas.hexagonalkotlin.application.users.commands.UserCommand
 import com.lucas.hexagonalkotlin.domain.users.dto.UsersDto
-import com.lucas.hexagonalkotlin.domain.users.model.Users
 
 /**
  * UsersUseCase.kt:
@@ -11,6 +11,6 @@ import com.lucas.hexagonalkotlin.domain.users.model.Users
  * @description: Adapter 에서 호출하는 UseCase Interface
  */
 interface UsersUseCase {
-    fun createUser(domain: Users): UsersDto
-    fun updateUser(domain: Users): UsersDto
+    fun createUser(command: UserCommand.CreateUserCommand): UsersDto
+    fun updateUser(command: UserCommand.UpdateUserCommand): UsersDto
 }

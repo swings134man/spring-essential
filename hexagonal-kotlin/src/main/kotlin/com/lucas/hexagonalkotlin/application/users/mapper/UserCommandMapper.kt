@@ -1,5 +1,6 @@
-package com.lucas.hexagonalkotlin.application.users.commands
+package com.lucas.hexagonalkotlin.application.users.mapper
 
+import com.lucas.hexagonalkotlin.application.users.commands.UserCommand
 import com.lucas.hexagonalkotlin.domain.users.dto.UserPasswordUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserSaveDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserUpdateDto

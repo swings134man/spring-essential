@@ -1,6 +1,6 @@
 package com.lucas.hexagonalkotlin.adapter.`in`.web
 
-import com.lucas.hexagonalkotlin.application.users.commands.UserCommandMapper
+import com.lucas.hexagonalkotlin.application.users.mapper.UserCommandMapper
 import com.lucas.hexagonalkotlin.application.users.port.`in`.UsersUseCase
 import com.lucas.hexagonalkotlin.domain.users.dto.UserPasswordUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserSaveDto

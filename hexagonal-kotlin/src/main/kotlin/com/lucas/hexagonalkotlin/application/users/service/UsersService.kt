@@ -55,6 +55,18 @@ class UsersService(
         usersRepository.updateUserPassword(find)
     }
 
+    // update PhoneNumber
+    @Transactional
+    override fun updateUserPhoneNumber(command: UserCommand.UserWithPhoneNumberCommand): UsersDto {
+        val domain = usersRepository.findUserById(command.id) // domain
+            ?: throw RuntimeException("User not found with id: ${command.id}")
+
+        domain.updatePhoneNumber(command.phoneNumber)
+
+        return usersRepository.updateUser(domain)
+            .let { UsersDto.fromDomain(it) }
+    }
+
     @Transactional(readOnly = true)
     override fun findAllUsers(): List<UsersDto> =
         usersRepository.findAllUsers().map { UsersDto.fromDomain(it) }
@@ -63,6 +75,29 @@ class UsersService(
     @Transactional(readOnly = true)
     override fun findUserById(id: Long): UsersDto? =
         usersRepository.findUserById(id)?.let { UsersDto.fromDomain(it) }
+
+    // activate User - 외부 인증 API 연동?
+    @Transactional
+    override fun activateUser(command: UserCommand.UserWithPhoneNumberCommand): UsersDto {
+        val domain = usersRepository.findUserById(command.id) // domain
+            ?: throw RuntimeException("User not found with id: ${command.id}")
+
+        // 휴대폰 번호 인증 로직 필요 (ex. SMS 인증) -> 현재는 생략 처리
+        domain.activate(true) // 활성화 처리
+
+        return usersRepository.updateUser(domain)
+            .let { UsersDto.fromDomain(it) }
+    }
+
+    @Transactional
+    override fun deactivateUser(id: Long) {
+        val domain = usersRepository.findUserById(id) // domain
+            ?: throw RuntimeException("User not found with id: ${id}")
+
+        domain.deactivate() // 비활성화 처리
+
+        usersRepository.updateUser(domain)
+    }
 
 
     // Domain Update - patch 방식

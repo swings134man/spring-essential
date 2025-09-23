@@ -3,6 +3,7 @@ package com.lucas.hexagonalkotlin.adapter.`in`.web
 import com.lucas.hexagonalkotlin.application.users.mapper.UserCommandMapper
 import com.lucas.hexagonalkotlin.application.users.port.`in`.UsersUseCase
 import com.lucas.hexagonalkotlin.domain.users.dto.UserPasswordUpdateDto
+import com.lucas.hexagonalkotlin.domain.users.dto.UserPhoneNumberUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserSaveDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UsersDto
@@ -57,6 +58,24 @@ class UsersController(
     fun changePassword(@RequestBody dto: UserPasswordUpdateDto): ResponseEntity<String> {
         val result = usersUseCase.updateUserPassword(userMapper.toUpdatePasswordCommand(dto))
         return ResponseEntity.ok("Password updated successfully")
+    }
+
+    @PostMapping("/update-phone")
+    fun changePhoneNumber(@RequestBody dto: UserPhoneNumberUpdateDto): ResponseEntity<UsersDto> {
+        val result = usersUseCase.updateUserPhoneNumber(userMapper.toUserWithPhoneNumberCommand(dto))
+        return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/deactivate/{id}")
+    fun deactivateUser(@PathVariable id: Long): ResponseEntity<String> {
+        usersUseCase.deactivateUser(id)
+        return ResponseEntity.ok("deactivated")
+    }
+
+    @PostMapping("/activate")
+    fun activateUser(@RequestBody dto: UserPhoneNumberUpdateDto): ResponseEntity<String> {
+        val result = usersUseCase.activateUser(userMapper.toUserWithPhoneNumberCommand(dto))
+        return ResponseEntity.ok(if(result.isActive) "verified" else "not verified")
     }
 
 }

@@ -1,9 +1,7 @@
 package com.lucas.hexagonalkotlin.domain.users.dto
 
-import java.time.LocalDateTime
-
 /**
- * UserSaveDto.kt: User Create DTO
+ * UserCrudDto.kt: User CRUD DTO
  *
  * @author: lucaskang(swings134man)
  * @since: 2025. 9. 20. 오후 9:39
@@ -35,4 +33,16 @@ data class UserUpdateDto(
 data class UserPasswordUpdateDto(
     val id: Long,
     val newPassword: String
+)
+
+// phone number update
+data class UserPhoneNumberUpdateDto(
+    val id: Long,
+    val newPhoneNumber: String
+)
+
+// activate user
+data class UserActivateDto(
+    val id: Long,
+    val phoneNumber: String
 )

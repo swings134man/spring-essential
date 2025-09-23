@@ -14,6 +14,9 @@ interface UsersUseCase {
     fun createUser(command: UserCommand.CreateUserCommand): UsersDto
     fun updateUser(command: UserCommand.UpdateUserCommand): UsersDto
     fun updateUserPassword(command: UserCommand.UpdateUserPasswordCommand)
+    fun updateUserPhoneNumber(command: UserCommand.UserWithPhoneNumberCommand): UsersDto
     fun findAllUsers(): List<UsersDto>
     fun findUserById(id: Long): UsersDto?
+    fun activateUser(command: UserCommand.UserWithPhoneNumberCommand): UsersDto
+    fun deactivateUser(id: Long)
 }

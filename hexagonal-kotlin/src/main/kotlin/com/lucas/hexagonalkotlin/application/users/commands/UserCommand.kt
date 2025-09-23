@@ -37,5 +37,10 @@ sealed class UserCommand {
         var newPassword: String
     ): UserCommand()
 
+    // id, PhoneNumber (activate, updatePhoneNumber)
+    data class UserWithPhoneNumberCommand(
+        var id: Long,
+        var phoneNumber: String
+    ): UserCommand()
 
 }

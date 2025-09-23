@@ -46,6 +46,15 @@ class Users(
         updatedAt = LocalDateTime.now()
     }
 
+    // 전화번호 인증 후 활성화 할 수 있도록
+    fun activate(phoneVerified: Boolean) {
+        require(phoneVerified) { "전화번호 인증이 필요합니다." }
+        if (isActive) throw IllegalStateException("이미 활성화된 사용자입니다.")
+        isActive = true
+        updatedAt = LocalDateTime.now()
+    }
+
+
     fun updatePhoneNumber(newPhoneNumber: String) {
         require(newPhoneNumber.matches(Regex("^010-\\d{4}-\\d{4}\$"))) {
             "전화번호 형식이 올바르지 않습니다."

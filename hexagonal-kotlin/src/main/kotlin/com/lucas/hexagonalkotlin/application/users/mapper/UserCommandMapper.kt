@@ -2,6 +2,7 @@ package com.lucas.hexagonalkotlin.application.users.mapper
 
 import com.lucas.hexagonalkotlin.application.users.commands.UserCommand
 import com.lucas.hexagonalkotlin.domain.users.dto.UserPasswordUpdateDto
+import com.lucas.hexagonalkotlin.domain.users.dto.UserPhoneNumberUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserSaveDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UserUpdateDto
 import com.lucas.hexagonalkotlin.domain.users.dto.UsersDto
@@ -21,11 +22,14 @@ interface UserCommandMapper {
     fun toDomain(command: UserCommand.CreateUserCommand): Users
     fun toDomain(command: UserCommand.UpdateUserCommand): Users
     fun toDomain(command: UserCommand.UpdateUserPasswordCommand): Users
+    fun toDomain(command: UserCommand.UserWithPhoneNumberCommand): Users
 
     // DTO -> Command
     fun toCreateCommand(dto: UserSaveDto): UserCommand.CreateUserCommand
     fun toUpdateCommand(dto: UserUpdateDto): UserCommand.UpdateUserCommand
     fun toUpdatePasswordCommand(dto: UserPasswordUpdateDto): UserCommand.UpdateUserPasswordCommand
+    fun toUserWithPhoneNumberCommand(dto: UserPhoneNumberUpdateDto): UserCommand.UserWithPhoneNumberCommand
+
 
     // Domain -> DTO
     fun toDto(domain: Users): UsersDto

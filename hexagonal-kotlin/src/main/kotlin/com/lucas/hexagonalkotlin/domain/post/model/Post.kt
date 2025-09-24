@@ -13,8 +13,8 @@ class Post (
     var id: Long? = null,
     var title: String,
     var content: String,
-    var writer: String,
-    var delYn: Char = 'N',
+    var writer: String?,
+    var delYn: String = "N",
     var viewCount: Int = 0,
     var userId: Long, // fk
     var createdAt: LocalDateTime?,
@@ -27,12 +27,11 @@ class Post (
 
     fun incrementViewCount() {
         viewCount++
-        updatedAt = LocalDateTime.now()
     }
 
     fun markAsDeleted() {
-        if (delYn == 'Y') throw IllegalStateException("이미 삭제된 게시물입니다.")
-        delYn = 'Y'
+        if (delYn == "Y") throw IllegalStateException("이미 삭제된 게시물입니다.")
+        delYn = "Y"
         updatedAt = LocalDateTime.now()
     }
 

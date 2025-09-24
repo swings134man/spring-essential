@@ -17,7 +17,7 @@ CREATE TABLE post (
                         title VARCHAR(200) NOT NULL,
                         content TEXT NOT NULL,
                         writer VARCHAR(50) NOT NULL, -- userName
-                        delYn CHAR(1) DEFAULT 'N' CHECK (delYn IN ('Y', 'N')),
+                        del_yn CHAR(1) DEFAULT 'N' CHECK (delYn IN ('Y', 'N')),
                         view_count INTEGER DEFAULT 0, -- 조회수
                         created_at TIMESTAMP(6),
                         updated_at TIMESTAMP(6),

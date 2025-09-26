@@ -5,8 +5,10 @@ import com.lucas.hexagonalkotlin.application.post.mapper.PostCommandMapper
 import com.lucas.hexagonalkotlin.application.post.port.`in`.PostUseCase
 import com.lucas.hexagonalkotlin.application.post.port.out.PostRepository
 import com.lucas.hexagonalkotlin.application.users.port.out.UsersRepository
+import com.lucas.hexagonalkotlin.domain.post.PostEventDto
 import com.lucas.hexagonalkotlin.domain.post.dto.PostDto
 import com.lucas.hexagonalkotlin.domain.post.model.Post
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -21,7 +23,8 @@ import org.springframework.transaction.annotation.Transactional
 class PostService(
     private val postMapper: PostCommandMapper,
     private val postRepository: PostRepository,
-    private val userRepository: UsersRepository
+    private val userRepository: UsersRepository,
+    private val eventPublisher: ApplicationEventPublisher
 ): PostUseCase {
 
     @Transactional
@@ -68,13 +71,14 @@ class PostService(
         return PostDto.fromDomain(domain)
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     override fun findByActivePosts(id: Long): PostDto? {
         val domain = postRepository.findByActivePosts(id)
             ?: throw RuntimeException("Active Post not found with id: $id")
 
         domain.incrementViewCount()
-        postRepository.incrementViewCount(domain) // TODO("Async 처리")
+
+        eventPublisher.publishEvent(PostEventDto.PostViewIncrementEventDto.fromDomain(domain))
 
         return PostDto.fromDomain(domain)
     }

@@ -2,7 +2,7 @@ spring:
   application:
     name: boot-basic
   profiles:
-    active: local
+    active: test
   lifecycle:
     timeout-per-shutdown-phase: 30s # Default 30s -> Timeout 시간을 늘리면 오래걸리는 작업또한 처리 후 종료 가능!
 

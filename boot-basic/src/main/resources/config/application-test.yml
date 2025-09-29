@@ -1,0 +1,60 @@
+server:
+  shutdown: graceful
+  tomcat:
+    reregistration:
+      enabled: true # Tomcat MBeanRegistry 활성화(Tomcat JMX 모니터링)
+    accept-count: 100 # 대기 큐의 최대 크기 (1024 ~ 2048) default: 100
+    max-connections: 8192 # 최대 연결 수(default)
+    threads:
+      min-spare: 10 # 최소 대기 스레드 수 (default) 상황에 따라 50 ~ 100 사이 설정?
+      max: 200 # 최대 스레드 수 (default)
+
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+    username: sa
+    password:
+    hikari:
+      driver-class-name: org.h2.Driver
+      idle-timeout: 180000 # 3*60*1000 = 3Min(유휴 상태 Connection 제거)
+      max-lifetime: 900000 # 15*60*1000 = 15Min(최대 Connection 생존 시간)
+      minimum-idle: 0 # 최소 Connection 수 - Maximum-pool-size 보다 작아야 함
+      maximum-pool-size: 10 # 최대 Connection 수
+      cache-prep-stmts: true # Prepared Statement 캐시 사용 여부
+      prep-stmt-cache-size: 200 # Prepared Statement 캐시 사이즈
+      prep-stmt-cache-sql-limit: 2048 # Prepared Statement 캐시 SQL 사이즈
+      use-server-prep-stmts: true # 서버에서 Prepared Statement 사용 여부(서버 쿼리 최적화)
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      settings:
+        trace: false
+        web-allow-other: true # 브라우저에서 접근 가능하도록 설정
+
+  # JPA Setting
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: create #fixme
+    defer-datasource-initialization: false #fixme
+  sql:
+    init:
+      mode: never #fixme
+
+
+logging:
+  level:
+    org.hibernate:
+      SQL: DEBUG
+      type.descriptor.sql: trace

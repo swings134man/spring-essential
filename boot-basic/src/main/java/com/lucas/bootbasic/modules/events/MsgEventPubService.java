@@ -1,5 +1,10 @@
 package com.lucas.bootbasic.modules.events;
 
+import com.lucas.bootbasic.modules.events.exceptions.obj.AfterObj;
+import com.lucas.bootbasic.modules.events.exceptions.ErrorEntity;
+import com.lucas.bootbasic.modules.events.exceptions.obj.BeforeObj;
+import com.lucas.bootbasic.modules.events.exceptions.obj.ErrorObj;
+import com.lucas.bootbasic.modules.events.exceptions.ErrorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -21,6 +26,7 @@ public class MsgEventPubService {
     // 이벤트 발행 Publisher(Spring Container Object)
     private final ApplicationEventPublisher eventPublisher;
 
+    private final ErrorRepository errorRepository;
 
     /**
     * @methodName : saveAndMessage
@@ -51,5 +57,40 @@ public class MsgEventPubService {
         }
     }
 
+    // Exception 발생 테스트용 (Basic)
+    @Transactional
+    public ErrorEntity errorTestSave(ErrorObj obj) {
+        // entity
+        ErrorEntity entity = new ErrorEntity().fromErrorObj(obj);
+        ErrorEntity result = errorRepository.save(entity);
+
+        eventPublisher.publishEvent(obj);
+
+        return result;
+    }
+
+    // Exception 발생 테스트용 (After Commit)
+    @Transactional
+    public ErrorEntity errorTestTrAfterCommitSave(AfterObj obj) {
+        // entity
+        ErrorEntity entity = new ErrorEntity().fromErrorObj(obj);
+        ErrorEntity result = errorRepository.save(entity);
+
+        eventPublisher.publishEvent(obj);
+
+        return result;
+    }
+
+    // Exception 발생 테스트용 (Before Commit)
+    @Transactional
+    public ErrorEntity errorTestTrBeforeCommitSave(BeforeObj obj) {
+        // entity
+        ErrorEntity entity = new ErrorEntity().fromErrorObj(obj);
+        ErrorEntity result = errorRepository.save(entity);
+
+        eventPublisher.publishEvent(obj);
+
+        return result;
+    }
 
 }//class

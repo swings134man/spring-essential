@@ -1,3 +1,4 @@
+# Local h2 mem Test 전용 Profile
 server:
   shutdown: graceful
   tomcat:
@@ -44,7 +45,7 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
     hibernate:
       ddl-auto: create #fixme
     defer-datasource-initialization: false #fixme

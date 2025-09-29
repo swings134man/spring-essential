@@ -2,6 +2,7 @@ package com.lucas.bootbasic.rest;
 
 import com.lucas.bootbasic.modules.events.MessageEventObj;
 import com.lucas.bootbasic.modules.events.MsgEventPubService;
+import com.lucas.bootbasic.modules.events.exceptions.obj.ErrorObj;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,10 @@ public class EventController {
         service.saveAndMessage(event.getId(), event.getMessage());
         return ResponseEntity.ok("Success");
     }
+
+//    @PostMapping("/error")
+//    public void errorTestCall(@RequestBody ErrorObj obj) {
+//
+//    }
 
 }

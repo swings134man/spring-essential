@@ -2,6 +2,7 @@ package com.lucas.bootbasic.modules.events;
 
 import com.lucas.bootbasic.modules.events.exceptions.obj.AfterObj;
 import com.lucas.bootbasic.modules.events.exceptions.ErrorEntity;
+import com.lucas.bootbasic.modules.events.exceptions.obj.AsyncObj;
 import com.lucas.bootbasic.modules.events.exceptions.obj.BeforeObj;
 import com.lucas.bootbasic.modules.events.exceptions.obj.ErrorObj;
 import com.lucas.bootbasic.modules.events.exceptions.ErrorRepository;
@@ -85,6 +86,16 @@ public class MsgEventPubService {
     @Transactional
     public ErrorEntity errorTestTrBeforeCommitSave(BeforeObj obj) {
         // entity
+        ErrorEntity entity = new ErrorEntity().fromErrorObj(obj);
+        ErrorEntity result = errorRepository.save(entity);
+
+        eventPublisher.publishEvent(obj);
+
+        return result;
+    }
+
+    @Transactional
+    public ErrorEntity asyncTrTest(AsyncObj obj) {
         ErrorEntity entity = new ErrorEntity().fromErrorObj(obj);
         ErrorEntity result = errorRepository.save(entity);
 

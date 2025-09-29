@@ -1,12 +1,16 @@
 package com.lucas.bootbasic.modules.events.exceptions;
 
 import com.lucas.bootbasic.modules.events.exceptions.obj.AfterObj;
+import com.lucas.bootbasic.modules.events.exceptions.obj.AsyncObj;
 import com.lucas.bootbasic.modules.events.exceptions.obj.BeforeObj;
 import com.lucas.bootbasic.modules.events.exceptions.obj.ErrorObj;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -21,6 +25,8 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @RequiredArgsConstructor
 @Slf4j
 public class EventErrorListener {
+
+    private final ErrorRepository errorRepository;
 
 
     // Exception 발생시, Callee 에 예외 전파
@@ -44,5 +50,19 @@ public class EventErrorListener {
     public void trAfterCommit(AfterObj obj) {
         log.info(">> After Commit -- Transaction Listener Called");
         throw new RuntimeException("After Commit Event Listener");
+    }
+
+
+    @Async("taskExecutor")
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+//    @Transactional
+    public void trWithAsync(AsyncObj obj) {
+        log.info(">> Async + After Commit -- Transaction Listener Called");
+        ErrorEntity entity = new ErrorEntity(null, "New 객체");
+        ErrorEntity result = errorRepository.save(entity);
+
+        log.info(">> Saved Entity: {}", result);
+        throw new RuntimeException("Async + After Commit Event Listener");
     }
 }

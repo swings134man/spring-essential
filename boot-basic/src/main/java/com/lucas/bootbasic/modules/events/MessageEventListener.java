@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
@@ -56,7 +57,9 @@ public class MessageEventListener {
     // 별도의 Thread 에서 실행되기에 Caller 측의 Transaction 과는 별개로 동작하게 됨. 따라서 Caller 측이 Rollback 되더라도 이 Listener 는 영향을 받지 않음.
     @Async("taskExecutor")
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    @Transactional // @TransactionalEventListener 와 함께 사용 시 별도의 트랜잭션 컨텍스트에서 실행됨 -> Rollback 시 Caller 측과는 별개로 동작
+//    @Transactional(propagation = Propagation.REQUIRES_NEW) // @TransactionalEventListener 와 함께 사용 시 별도의 트랜잭션 컨텍스트에서 실행됨 -> Rollback 시 Caller 측과는 별개로 동작
+    // Async 사용시 트랜잭션이 분리만 될뿐 DB I/O 작업이 있다면 트랜잭션 처리는 필요함! -> @Transactional 사용 -> 안하면 트랜잭션 롤백 동작 X
+    // TransactionalEventListener 는 REQUIRES_NEW 를 사용하여야 함.
     public void asyncTrHandle(MessageEventObj event) {
         // if Caller Transaction is Rollback, this Listener will not be called.
         log.info("4. Async Transactional Listener Called - ID: {}, Message: {}", event.getId(), event.getMessage());

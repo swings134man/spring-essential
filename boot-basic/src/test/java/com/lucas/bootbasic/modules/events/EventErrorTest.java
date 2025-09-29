@@ -2,6 +2,7 @@ package com.lucas.bootbasic.modules.events;
 
 import com.lucas.bootbasic.modules.events.exceptions.obj.AfterObj;
 import com.lucas.bootbasic.modules.events.exceptions.ErrorEntity;
+import com.lucas.bootbasic.modules.events.exceptions.obj.AsyncObj;
 import com.lucas.bootbasic.modules.events.exceptions.obj.BeforeObj;
 import com.lucas.bootbasic.modules.events.exceptions.obj.ErrorObj;
 import com.lucas.bootbasic.modules.events.exceptions.ErrorRepository;
@@ -93,6 +94,27 @@ class EventErrorTest {
 
         // then
         Assertions.assertEquals(0, errorRepository.count());
+        List<ErrorEntity> all = errorRepository.findAll();
+        System.out.println(all);
+    }
+
+    @Test
+    @DisplayName("(Async + After Commit)Tr Listener Rollback false 테스트 - 별도 트랜잭션에서 실행")
+    void TR_ASYNC_리스너_예외_전파_없음_테스트() throws Exception {
+        // given
+        AsyncObj obj = new AsyncObj(null, "기본 객체");
+
+        // when & then
+        try {
+            msgEventPubService.asyncTrTest(obj);
+            // Async 이므로 잠시 대기
+            Thread.sleep(2000);
+        } catch (RuntimeException e) {
+            log.error("Exception caught in test: {}", e.getMessage());
+        }
+
+        // then
+        Assertions.assertEquals(1, errorRepository.count());
         List<ErrorEntity> all = errorRepository.findAll();
         System.out.println(all);
     }

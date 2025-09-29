@@ -1,6 +1,7 @@
 package com.lucas.bootbasic.modules.events.exceptions;
 
 import com.lucas.bootbasic.modules.events.exceptions.obj.AfterObj;
+import com.lucas.bootbasic.modules.events.exceptions.obj.AsyncObj;
 import com.lucas.bootbasic.modules.events.exceptions.obj.BeforeObj;
 import com.lucas.bootbasic.modules.events.exceptions.obj.ErrorObj;
 import jakarta.persistence.Entity;
@@ -37,6 +38,13 @@ public class ErrorEntity {
     }
 
     public ErrorEntity fromErrorObj(BeforeObj obj) {
+        return new ErrorEntity(
+                obj.getId(),
+                obj.getMessage()
+        );
+    }
+
+    public ErrorEntity fromErrorObj(AsyncObj obj) {
         return new ErrorEntity(
                 obj.getId(),
                 obj.getMessage()

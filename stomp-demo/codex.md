@@ -40,6 +40,6 @@
 - 작업 중 판단의 기준은 우선 `README.md`, 다음으로 `build.gradle.kts`, 마지막으로 실제 코드 구현 상태로 둔다.
 - 추가 구현 또는 수정이 필요할 경우, 먼저 작업 단위를 명확히 한 뒤 진행한다.
 - 산출물의 경우 OOP 원칙을 준수하여 모듈화, 재사용성, 유지보수성을 고려한다.
-- 디렉토리 구조는 /src/main/kotlin/com/example/stompdemo/ 아래에 패키지별로 구분하여 작성한다.
+- 디렉토리 구조는 /src/main/kotlin/com/lucas/stompdemo/ 아래에 패키지별로 구분하여 작성한다.
   - 패키지는 `config`, `controller`, `model`, `service`, `util` 등으로 나누어 작성한다.
 - 
